@@ -51,6 +51,7 @@
 					<input type="hidden" name="jumin">
 					<div class="d-grid">
 						<input class="btn btn-primary btn-block mb-3" type="submit" value="아이디 찾기"/>
+						<input class="btn btn-primary btn-block mb-3" type="button" value="돌아가기" onclick="location.href='loginPage'"/>
 					</div>
 				</form>
 			</div>

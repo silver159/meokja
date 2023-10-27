@@ -45,6 +45,7 @@
 					<input type="hidden" name="jumin">
 					<div class="d-grid">
 						<input class="btn btn-primary btn-block mb-3" type="submit" value="비밀번호 변경"/>
+						<input class="btn btn-primary btn-block mb-3" type="button" value="돌아가기" onclick="history.back()"/>
 					</div>
 				</form>
 			</div>

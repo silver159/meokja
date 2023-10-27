@@ -10,7 +10,7 @@ public interface MemberDAO {
 
 	MemberVO selectById(String member_id);
 
-	MemberVO selectByName(MemberVO memberVO);
+	String selectByName(MemberVO memberVO);
 
 	MemberVO pwSerch(MemberVO memberVO);
 

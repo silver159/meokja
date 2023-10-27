@@ -146,7 +146,7 @@
 					</form>
 					<div class="text-center">
 						<input id="back_btn" class="btn btn-primary" type="button" value="돌아가기"
-							onclick="history.back()" hidden/>
+							onclick="location.href = 'list'" hidden/>
 					</div>
 				</div>
 			</div>

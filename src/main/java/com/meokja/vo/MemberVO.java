@@ -1,6 +1,8 @@
 package com.meokja.vo;
 
+import lombok.Data;
 
+@Data
 public class MemberVO {
 	
 	private String member_id;	// 회원 ID
@@ -15,93 +17,4 @@ public class MemberVO {
 	private String photo;		// 프로필사진
 	private String postCode;	// 우편번호
 	private String address;		// 주소
-	
-	
-	public String getMember_id() {
-		return member_id;
-	}
-	public void setMember_id(String member_id) {
-		this.member_id = member_id;
-	}
-	public String getPw() {
-		return pw;
-	}
-	public void setPw(String pw) {
-		this.pw = pw;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getNickname() {
-		return nickname;
-	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
-	}
-	public String getGender() {
-		return gender;
-	}
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-	public String getJumin() {
-		return jumin;
-	}
-	public void setJumin(String jumin) {
-		this.jumin = jumin;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getPhoto() {
-		return photo;
-	}
-	public void setPhoto(String photo) {
-		this.photo = photo;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	
-	public String getPostCode() {
-		return postCode;
-	}
-	public void setPostCode(String postCode) {
-		this.postCode = postCode;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	@Override
-	public String toString() {
-		return "MemberVO [member_id=" + member_id + ", pw=" + pw + ", name=" + name + ", nickname=" + nickname
-				+ ", age=" + age + ", gender=" + gender + ", jumin=" + jumin + ", email=" + email + ", phone=" + phone
-				+ ", photo=" + photo + ", postCode=" + postCode + ", address=" + address + "]";
-	}
-	
-	
-	
-	
-	
-
-	
-	
 }

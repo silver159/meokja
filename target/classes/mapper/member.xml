@@ -40,9 +40,9 @@
 	<select id="selectById" parameterType="String" resultType="mo">
    		select * from tb_member where member_id = #{member_id}
 	</select>
-	<!-- 같은 이름 주민번호 정보 가져오기 -->
-	<select id="selectByName" parameterType="mo" resultType="mo">
-   		select * from tb_member where name = #{name} and jumin = #{jumin}
+	<!-- 이름 주민번호 정보로 id 가져오기 -->
+	<select id="selectByName" parameterType="mo" resultType="String">
+   		select member_id from tb_member where name = #{name} and jumin = #{jumin}
 	</select>
 	
 	<select id="pwSerch" parameterType="mo" resultType="mo">

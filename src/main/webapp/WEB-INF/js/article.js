@@ -17,7 +17,7 @@ const joinChk = () => {
     console.log(contents);
      
     if(contents.length == 0 || contents == ''){
-    	alert('내용을 입력하a세요.');
+    	alert('내용을 입력하세요.');
         return false;
 	}
 }

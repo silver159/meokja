@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.meokja.api.NaverSMTP;
 import com.meokja.dao.JoinDAO;
 import com.meokja.dao.PartyDAO;
+import com.meokja.service.JoinService;
 import com.meokja.vo.JoinList;
 import com.meokja.vo.JoinVO;
 import com.meokja.vo.MemberVO;
@@ -43,6 +43,7 @@ public class JoinController {
 	
 	@Autowired
 	JoinVO joinVO;
+	
 	@Autowired
 	MemberVO user;
 	
@@ -55,26 +56,19 @@ public class JoinController {
 	@Autowired
 	PartyList partyList;
 	
-
-	@RequestMapping(value = "/joinInsert", method = RequestMethod.POST)
-	public String joinInsert(HttpServletRequest request, HttpSession session, Model model, JoinVO joinVO) {
-		logger.info("JoinController의 joinInsert()");
-		
-		JoinDAO mapper = sqlSession.getMapper(JoinDAO.class);
-		
-		// 세션에 저장된 회원정보
-		user = (MemberVO) session.getAttribute("user");
-		
-		joinVO.setMember_id(user.getMember_id());
-		logger.info("{} line59", joinVO);
-		
-		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		logger.info("{} line35", currentPage);
-		mapper.joinInsert(joinVO);
-		
-		return "redirect:selectByIdx?party_id=" +joinVO.getParty_id()+ "&currentPage=" + currentPage+ "&job=article";
-	}
+	@Autowired
+	JoinService joinService;
 	
+    @RequestMapping(value = "/joinInsert", method = RequestMethod.POST)
+    public String joinInsert(HttpServletRequest request, HttpSession session, Model model, JoinVO joinVO) {
+    	logger.info("JoinController의 joinInsert()");
+    	int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+    	String joinInsert = joinService.joinInsert(session, joinVO);
+    	
+    	return joinInsert + "&currentPage=" + currentPage;
+    }
+	
+    // 확인바람
 	@RequestMapping(value = "/joinServlet", method = RequestMethod.POST)
 	@ResponseBody
 	public String repleServlet(HttpServletRequest request, Model model, PartyVO partyVO) {

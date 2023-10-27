@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.meokja.meokja">
+	<logger name="com.meokja">
 		<level value="info" />
 	</logger>
 	

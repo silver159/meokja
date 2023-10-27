@@ -50,6 +50,7 @@ ${mo}
 					</div>
 					<div class="d-grid">
 						<input class="btn btn-primary btn-block mb-3" type="submit" value="비밀번호 찾기"/>
+						<input class="btn btn-primary btn-block mb-3" type="button" value="돌아가기" onclick="location.href='loginPage'"/>
 					</div>
 					<!-- hidden -->
 					<input type="hidden" name="jumin">

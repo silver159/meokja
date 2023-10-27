@@ -14,7 +14,7 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
-	<resources mapping="/upload/**" location="file:///c:/upload/"/><!-- upload -->
+	<resources mapping="/upload/**" location="file:///c:/upload/"/> <!-- upload -->
 	<resources mapping="/images/**" location="/WEB-INF/images/" />	<!-- image -->
 	<resources mapping="/css/**" location="/WEB-INF/css/" />		<!-- css -->
 	<resources mapping="/js/**" location="/WEB-INF/js/" />			<!-- javascript -->
@@ -42,7 +42,7 @@
 	-->
 	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<beans:property name="dataSource" ref="dataSource"/>
-		<beans:property name="mapperLocations" value="classpath:com/meokja/dao/*.xml"/>
+		<beans:property name="mapperLocations" value="classpath:mapper/*.xml"/>
 		<beans:property name="configLocation" value="classpath:mybatis-config.xml"/>
 	</beans:bean>
 	
@@ -59,14 +59,17 @@
 	<beans:bean id="partyVO" class="com.meokja.vo.PartyVO"/>
 	<beans:bean id="joinVO" class="com.meokja.vo.JoinVO"/>
 	<beans:bean id="reportVO" class="com.meokja.vo.ReportVO"/>
-
+	
+	<!-- service 클래스의 bean -->
+	<beans:bean id="loginService" class="com.meokja.service.LoginService"/>
+	<beans:bean id="joinService" class="com.meokja.service.JoinService"/>
 	
 	<!-- List 클래스의 bean -->
 	<beans:bean id="partyList" class="com.meokja.vo.PartyList"/>
 	<beans:bean id="MemberList" class="com.meokja.vo.MemberList"/>
 	<beans:bean id="sliderList" class="com.meokja.vo.PartyList"/>
 	<beans:bean id="joinList" class="com.meokja.vo.JoinList"/>
-	
+
 	<!-- Param 클래스의 bean -->
 	<beans:bean id="param" class="com.meokja.vo.Param"/>
 	
