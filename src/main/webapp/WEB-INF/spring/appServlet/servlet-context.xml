@@ -63,6 +63,7 @@
 	<!-- service 클래스의 bean -->
 	<beans:bean id="loginService" class="com.meokja.service.LoginService"/>
 	<beans:bean id="joinService" class="com.meokja.service.JoinService"/>
+	<beans:bean id="partyService" class="com.meokja.service.PartyService"/>
 	
 	<!-- List 클래스의 bean -->
 	<beans:bean id="partyList" class="com.meokja.vo.PartyList"/>

@@ -26,6 +26,7 @@ import com.meokja.api.NaverSMTP;
 import com.meokja.dao.JoinDAO;
 import com.meokja.dao.PartyDAO;
 import com.meokja.service.JoinService;
+import com.meokja.service.PartyService;
 import com.meokja.vo.JoinList;
 import com.meokja.vo.JoinVO;
 import com.meokja.vo.MemberVO;
@@ -59,6 +60,10 @@ public class JoinController {
 	@Autowired
 	JoinService joinService;
 	
+	@Autowired
+	PartyService partyService;
+	
+	// 파티 참여
     @RequestMapping(value = "/joinInsert", method = RequestMethod.POST)
     public String joinInsert(HttpServletRequest request, HttpSession session, Model model, JoinVO joinVO) {
     	logger.info("JoinController의 joinInsert()");
@@ -90,107 +95,38 @@ public class JoinController {
 		return String.valueOf(result);
 	}
 	
+	// 모임 수락
 	@RequestMapping(value = "/joinOK", method = RequestMethod.GET)
 	public void joinOK(HttpServletRequest request, HttpServletResponse response, Model model, JoinVO joinVO) throws IOException {
 		logger.info("JoinController의 joinOK()");
-		logger.info("line104 {}", joinVO);
+		logger.info("line102 {}", joinVO);
 		
-		JoinDAO joinMapper = sqlSession.getMapper(JoinDAO.class);
-		PartyDAO partyMapper = sqlSession.getMapper(PartyDAO.class);
 		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		int limitNum = joinVO.getLimitNum();
-		int count = joinVO.getCount();
 		
-		// 해당 join
-		joinVO = joinMapper.selectByJoin_id(joinVO);
-		vo = partyMapper.selectByParty_id(joinVO.getParty_id());
+		// 정보 가져오기
+		joinVO = joinService.selectByJoin_id(joinVO);
+        vo = partyService.selectByParty_id(joinVO.getParty_id());
 		
-		// 메일 보내기
-		String from = "ajrwkd1@naver.com";
-		String to = joinVO.getEmail(); 
-		String subject = "신청하신 모임의 참여가 승인되었습니다.";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
-		String mealed_at = sdf.format(vo.getMealed_at());
-		String content = joinVO.getMember_id() + "님 신청하신 " + mealed_at + " 모임 참여가 승인되었습니다.";
-		
-		// 폼값(이메일 내용) 저장
-		Map<String, String> emailInfo = new HashMap<String, String>();
-		emailInfo.put("from", from);		// 보내는 사람
-		emailInfo.put("to", to);			// 받는 사람
-		emailInfo.put("subject", subject);	// 제목
-		emailInfo.put("content", content);
-		emailInfo.put("format", "text/plain;charset=UTF-8");
-		logger.info("line137 {}", emailInfo);
-		try {
-			NaverSMTP smtpServer = new NaverSMTP();	// 메일 전송 클래스 생성
-			smtpServer.emailSending(emailInfo);		// 전송
-			System.out.print("이메일 전송 성공");
-		} catch (Exception e) {
-			System.out.print("이메일 전송 실패");
-		}
-
-		PrintWriter out = getPrintWriter(response);
-		// 참여 승인
-		if(limitNum == count+1) {
-			joinMapper.deleteJoin(joinVO);
-		}
-		joinMapper.joinGrant(joinVO);
-		out.println("<script>");
-		out.println("alert('승인 완료!!!')");
-		out.println("location.href='selectByIdx?party_id=" +joinVO.getParty_id()+ "&currentPage=" +currentPage+ "&job=article'");
-		out.println("</script>");
-		out.flush();
+        // 참여 승인
+        String grantMessage = joinService.joinGrant(joinVO, vo, currentPage);
+        printScriptMessage(response, grantMessage);
 	}
 	
+	// 모임 거절
 	@RequestMapping(value = "/joinNO", method = RequestMethod.GET)
 	public void joinNO(HttpServletRequest request, HttpServletResponse response, Model model, JoinVO joinVO) throws IOException {
 		logger.info("JoinController의 joinNO()");
 		logger.info("line157 {}", joinVO);
 		
-		JoinDAO joinMapper = sqlSession.getMapper(JoinDAO.class);
-		PartyDAO partyMapper = sqlSession.getMapper(PartyDAO.class);
-		
+		// 정보 가져오기
 		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		logger.info("{} line35", currentPage);
-		joinVO = joinMapper.selectByJoin_id(joinVO);
-		logger.info("line116 {}", joinVO);
-		vo = partyMapper.selectByParty_id(joinVO.getParty_id());
-		logger.info("line118 {}", vo);
+		joinVO = joinService.selectByJoin_id(joinVO);
+		vo = partyService.selectByParty_id(joinVO.getParty_id());
 		
-		// 메일 보내기
-		String from = "ajrwkd1@naver.com";
-		String to = joinVO.getEmail(); 
-		String subject = "신청하신 모임의 참여가 거절되었습니다.";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
-		String mealed_at = sdf.format(vo.getMealed_at());
-		String content = joinVO.getMember_id() + "님 신청하신 " + mealed_at + " 모임 참여가 거절되었습니다.";
-		
-		// 폼값(이메일 내용) 저장
-		Map<String, String> emailInfo = new HashMap<String, String>();
-		emailInfo.put("from", from); // 보내는 사람
-		emailInfo.put("to", to); // 받는 사람
-		emailInfo.put("subject", subject); // 제목
-		emailInfo.put("content", content);
-		emailInfo.put("format", "text/plain;charset=UTF-8");
-		logger.info("line137 {}", emailInfo);
-		try {
-			NaverSMTP smtpServer = new NaverSMTP(); // 메일 전송 클래스 생성
-			smtpServer.emailSending(emailInfo); // 전송
-			System.out.print("이메일 전송 성공");
-		} catch (Exception e) {
-			System.out.print("이메일 전송 실패");
-			e.printStackTrace();
-		}
-		
-		PrintWriter out = getPrintWriter(response);
-		joinMapper.joinReject(joinVO);
-		out.println("<script>");
-		out.println("alert('거절 완료!!!')");
- 		out.println("location.href='selectByIdx?party_id=" +joinVO.getParty_id()+ "&currentPage=" +currentPage+ "&job=article'");
-		out.println("</script>");
-		out.flush();
+		// 참여 거절
+		String rejectMessage = joinService.joinReject(joinVO, vo, currentPage);
+		printScriptMessage(response, rejectMessage);
 	}
-	
 	
 	@RequestMapping(value = "/joinCHK", method = RequestMethod.POST)
 	@ResponseBody
@@ -205,9 +141,13 @@ public class JoinController {
 		return String.valueOf(result);
 	}
 	
-	private PrintWriter getPrintWriter(HttpServletResponse response) throws IOException {
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-	    return out;
-	}
+    // 공통 메소드
+    private void printScriptMessage(HttpServletResponse response, String scriptMessage) throws IOException {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<script>");
+        out.println(scriptMessage);
+        out.println("</script>");
+        out.flush();
+    }
 }
