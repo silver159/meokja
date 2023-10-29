@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.meokja.dao.MemberDAO;
+import com.meokja.service.MemberService;
 import com.meokja.vo.MemberVO;
 
 
@@ -33,36 +34,37 @@ public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired
-	private SqlSession sqlSession;
+	private MemberVO mo;
 	
 	@Autowired
-	private MemberVO mo;
+	private MemberService memberService;
 	
 	@RequestMapping(value = "/memberServlet", method = RequestMethod.POST)
 	@ResponseBody
-	
 	public String memberServlet(HttpServletRequest request, Model model, HttpServletResponse response, MemberVO memberVO, HttpSession session) {
+		
 		logger.info("PageController의 memberServlet()");
-		MemberDAO mapper = sqlSession.getMapper(MemberDAO.class);
-		logger.info("{} line39", memberVO);
-		
-		int result = mapper.IDCheck(memberVO);
-		// 1있다. 0 없다.
-		logger.info("{} line129", result);
-		
-		return String.valueOf(result);
+        logger.info("{} line47", memberVO);
+        
+        int result = memberService.IDCheck(memberVO);
+        // 1있다. 0 없다.
+        logger.info("{} line129", result);
+        
+        return String.valueOf(result);
 	}
 	
+	// 회원 가입
 	@RequestMapping("/member")
-	public String member(MultipartHttpServletRequest request, Model model, MemberVO memberVO, HttpServletResponse response) throws IOException {
+	public void member(MultipartHttpServletRequest request, Model model, MemberVO memberVO, HttpServletResponse response) throws IOException {
+		
 		logger.info("MemberController의 member()");
-		MemberDAO mapper = sqlSession.getMapper(MemberDAO.class);
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		logger.info("{} line49", memberVO);
+		logger.info("{} line60", memberVO);
+		
+		// 사진 저장 경로 지정
 		String rootUplordDir = "C:" + File.separator + "upload" + File.separator + "memberphoto"; // C:\Upload\memberphoto
 		logger.info("uploadDirectory: {}", rootUplordDir);
 		
+		// 사진 저장 & 이름 지정
 		Iterator<String> iterator = request.getFileNames();
 	    MultipartFile multipartFile = null;
 	    String uploadFilename = iterator.next();
@@ -78,75 +80,67 @@ public class MemberController {
 	    		multipartFile.transferTo(new File(rootUplordDir + File.separator + photo));
 	        } catch (Exception e) {}
 	    } else {
+	    	// 사진 없을 시 기본 사진 지정
 	    	photo = "default.jpg";
 	    }
 	    
+	    // 사진 이름 저장
 	    memberVO.setPhoto(photo);
-		mapper.memberInsert(memberVO);
+	    String memberInsertMessage = memberService.memberInsert(memberVO);
 		
-		out.println("<script>");
-		out.println("alert('회원 가입을 축하드립니다~!')");
-		out.println("location.href='loginPage'");
-		out.println("</script>");
-		out.flush();
-		return "login";
+        printScriptMessage(response, memberInsertMessage);
 	}
 	
-	
+	// 회원정보 수정
 	@RequestMapping("/myProfileOK")
 	public void myProfileOK(MultipartHttpServletRequest request, HttpSession session, Model model, MemberVO memberVO, HttpServletResponse response) throws IOException {
-		logger.info("MemberController의 myProfileOK()");
-		MemberDAO mapper = sqlSession.getMapper(MemberDAO.class);
 		
-		logger.info("{} line175", memberVO);
+		logger.info("MemberController의 myProfileOK()");
+		logger.info("{} line99", memberVO);
+		
+		// 사진 저장 경로 지정
 		String rootUplordDir = "C:" + File.separator + "upload" + File.separator + "memberphoto"; // C:\Upload\memberphoto
 		
+		// 사진 저장 & 이름 지정
 		Iterator<String> iterator = request.getFileNames();
 		MultipartFile multipartFile = null;
 		String uploadFilename = iterator.next();
 		multipartFile = request.getFile(uploadFilename);
 		String originalName = multipartFile.getOriginalFilename();
 		logger.info("originalName: {}", originalName);
-		
-		// mo에 저장된 랜덤 사진이름 가져오기
-//		MemberVO mo = (MemberVO) session.getAttribute("mo");
-//		String randomPhotoName = mo.getPhoto().substring(0, 37);
-//		String photo = randomPhotoName + originalName;
 
 		String photo = uploadFile(originalName);
 		String defaultImgCheck = request.getParameter("defaultImgCheck");
 		if(originalName != null && originalName.length() != 0) {
-	          try {
-	             multipartFile.transferTo(new File(rootUplordDir + File.separator + photo));
-	           } catch (Exception e) {}
-	       } else if(defaultImgCheck.equals("N")) {
-	          photo = "default.jpg";
-	       } else {
-	          photo = mo.getPhoto();
-	       }
+			try {
+				multipartFile.transferTo(new File(rootUplordDir + File.separator + photo));
+	        } catch (Exception e) {}
+		} else if(defaultImgCheck.equals("N")) {
+			photo = "default.jpg";
+	    } else {
+	        photo = mo.getPhoto();
+	    }
 		memberVO.setPhoto(photo);
 		logger.info("{}", memberVO);
-        mapper.myProfileUpdate(memberVO);
-//		
-        MemberVO user = mapper.selectById(memberVO.getMember_id());
-        
-		session.setAttribute("user", user);
-		PrintWriter out = getPrintWriter(response);
-		out.println("<script>");
-		out.println("alert('" + user.getName() + " 님 개인 정보가 수정되었습니다 ~!')");
-		out.println("location.href='list'");
-		out.println("</script>");
-		out.flush();
+		memberService.myProfileUpdate(memberVO);
+		
+        String profileUpdateMessage = memberService.selectById(memberVO.getMember_id(), session);
+        printScriptMessage(response, profileUpdateMessage);
 	}
 	
+    // 공통 메소드
 	
-//	PrintWriter
-	private PrintWriter getPrintWriter(HttpServletResponse response) throws IOException {
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-	    return out;
-	}
+	// PrintWriter
+    private void printScriptMessage(HttpServletResponse response, String scriptMessage) throws IOException {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<script>");
+        out.println(scriptMessage);
+        out.println("</script>");
+        out.flush();
+    }
 	
+    // UUID
 	private String uploadFile(String originalName) {
 		UUID uuid = UUID.randomUUID();
 		String savedName =  uuid.toString()+"_"+originalName;

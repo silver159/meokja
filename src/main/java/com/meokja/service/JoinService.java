@@ -1,6 +1,7 @@
 package com.meokja.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -131,8 +132,22 @@ public class JoinService {
 		rejectMessage  += "location.href='selectByIdx?party_id=" +joinVO.getParty_id()+ "&currentPage=" +currentPage+ "&job=article';";
 		return rejectMessage;
 	}
-
-
+	
+	public int joinCHK(JoinVO joinVO) {
+		
+		logger.info("JoinService의 joinCHK()");
+		
+		JoinDAO mapper = sqlSession.getMapper(JoinDAO.class);
+		return mapper.joinCHK(joinVO);
+	}
+	
+	public ArrayList<JoinVO> selectJoinList(int party_id) {
+		
+		logger.info("JoinService의 joinCHK()");
+		
+		JoinDAO mapper = sqlSession.getMapper(JoinDAO.class);
+		return mapper.selectJoinList(party_id);
+	}
     
     
 }

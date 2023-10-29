@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.meokja.dao.JoinDAO;
 import com.meokja.dao.MemberDAO;
+import com.meokja.dao.PartyDAO;
+import com.meokja.dao.ReportDAO;
+import com.meokja.service.JoinService;
+import com.meokja.service.MemberService;
+import com.meokja.service.PartyService;
+import com.meokja.service.ReportService;
 import com.meokja.vo.JoinList;
 import com.meokja.vo.JoinVO;
 import com.meokja.vo.MemberVO;
@@ -35,8 +40,6 @@ import com.meokja.vo.Param;
 import com.meokja.vo.PartyList;
 import com.meokja.vo.PartyVO;
 import com.meokja.vo.ReportVO;
-import com.meokja.dao.PartyDAO;
-import com.meokja.dao.ReportDAO;
 
 
 @Controller
@@ -62,73 +65,82 @@ public class PartyController {
 	@Autowired
 	PartyList partyList;
 	
-//	검색어 없는 요청
+	@Autowired
+	private PartyService partyService;
+	
+	@Autowired
+	private MemberService memberService;
+	
+	@Autowired
+	private ReportService reportService;
+	
+	@Autowired
+	private JoinService joinService;
+	
+	// 검색어 없는 요청
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public String listGET(Model model, Param param) {
 		
-		logger.info("line60 {}", param);
-//		페이지 변경 요청
+		logger.info("line73 {}", param);
+		// 검색어 있는 경우
 		if(param.getLocal_category() != null && param.getLocal_category() != "") {
+			// 검색버튼 누른 검색어 요청으로 보내준다.
 			listPOST(model, param);
 			return"list";
 		}
-		
+		// 이제부터 검색어 없는 요청
 		logger.info("PartyController의 listGET()");
-		PartyDAO mapper = sqlSession.getMapper(PartyDAO.class);
 		logger.info("line46 {}", param);
 
 		// 검색어 없이 처음 list를 요청한 경우
+		// 페이징 작업
 		int currentPage = param.getCurrentPage();
-		int totalCount = mapper.selectCount();
-
+		int totalCount = partyService.selectCount();
 		partyList.initPartyList(totalCount, currentPage);
 		HashMap<String, Integer> hmap = new HashMap<String, Integer>();
 		hmap.put("startNo", partyList.getStartNo());
 		hmap.put("endNo", partyList.getEndNo());
-		partyList.setList(mapper.selectList(hmap));
+		partyList.setList(partyService.selectList(hmap));
 
 		logger.info("line67 {}", partyList);
 		
 		model.addAttribute("partyList", partyList);
-		model.addAttribute("sliderList", sliderList(mapper));
+		model.addAttribute("sliderList", sliderList(partyService));
 		model.addAttribute("currentPage", currentPage);
 		System.out.println(new ReportVO());
 		return"list";
 	}
-
-//	검색버튼 누른 검색어 요청
+	
+	// 검색버튼 누른 검색어 요청
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
 	public String listPOST(Model model, Param param) {
 		
 		logger.info("PartyController의 listPOST()");
-		PartyDAO mapper = sqlSession.getMapper(PartyDAO.class);
 		logger.info("line80 {}", param);
 		
 		int currentPage = param.getCurrentPage();
-		int totalCount = mapper.selectCountMulti(param);
-//		logger.info("line86 {}", totalCount);
-
+		int totalCount = partyService.selectCountMulti(param);
+		logger.info("line86 {}", totalCount);
+		
 		partyList.initPartyList(totalCount, currentPage);
 		param.setStartNo(partyList.getStartNo());
 		param.setEndNo(partyList.getEndNo());
-		partyList.setList(mapper.selectListMulti(param));
+		partyList.setList(partyService.selectListMulti(param));
 		logger.info("totalCount : {}", partyList);
 		
 		model.addAttribute("partyList", partyList);
-		model.addAttribute("sliderList", sliderList(mapper));
+		model.addAttribute("sliderList", sliderList(partyService));
 		model.addAttribute("location", param.getLocal_category());
 		model.addAttribute("condition", param.getCondition());
 		model.addAttribute("category", param.getFood_category());
 		model.addAttribute("item", param.getItem());
 		
-		
 		return"list";
 	}
-	
+	/*
 	@RequestMapping("/selectByIdx")
 	public String selectByIdx(HttpServletResponse response, HttpServletRequest request, Model model, HttpSession session) throws IOException {
 		logger.info("PartyController의 selectByIdx()");
-		PrintWriter out = getPrintWriter(response);
 		
 		user = (MemberVO) session.getAttribute("user");
 //		로그인이 되어있지 않을 경우
@@ -177,9 +189,55 @@ public class PartyController {
 		}
 
 		String job = request.getParameter("job");
-		
 		return job;
+	}
+	*/
+	// 선택한 들어가기
+	@RequestMapping("/selectByIdx")
+	public String selectByIdx(HttpServletResponse response, HttpServletRequest request, Model model, HttpSession session) throws IOException {
+		logger.info("PartyController의 selectByIdx()");
+		user = (MemberVO) session.getAttribute("user");
+//		로그인이 되어있지 않을 경우
+		if (user == null) {
+			
+		}else {
+			
+			// 넘어오는 데이터 2가지 받기		
+			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+			int	party_id = Integer.parseInt(request.getParameter("party_id"));
+			System.out.println(party_id);
+			// 메인글 1건을 얻어오는 메소드를 호출한다.	
+			partyVO = partyService.selectByParty_id(party_id);
+			
+			// 메인글 1건의 종속한 Join List를 얻어온다.
+			joinList.setList(joinService.selectJoinList(party_id));
+			logger.info("line162 {}", joinList);
+			
+			// 메인글의 모임장 정보를 가져온다.
+			logger.info("line165 {}", partyVO);
+			memberVO = memberService.selectById(partyVO.getMember_id());
+			logger.info("line162 {}", memberVO);
+			
+//		메인글의 내가 신고한 내역이 있는지 확인한다.
+			reportVO.setMember_id(user.getMember_id());
+			reportVO.setParty_id(party_id);
+			logger.info("line167 {}", reportVO);
+//		메인글 1건의 종속한 report DB 중 회원정보한 일치한 report 조회
+			int reportCount = ReportMapper.reportCount(reportVO);
+			
+			String isReport = reportCount == 0 ? "N" : "Y";
+			logger.info("{} line254", isReport);
+			
+			model.addAttribute("master", memberVO);
+			model.addAttribute("isReport", isReport);
+			model.addAttribute("joinList", joinList);
+			model.addAttribute("vo", partyVO);
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("enter", "\r\n");
+		}
 		
+		String job = request.getParameter("job");
+		return job;
 	}
 	
 	@RequestMapping("/partyInsert")
@@ -272,18 +330,18 @@ public class PartyController {
 		logger.info("line272 {}", partyVO);
 		
 		PartyDAO mapper = sqlSession.getMapper(PartyDAO.class);
-		PrintWriter out = getPrintWriter(response);
 		
 		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		
 		mapper.partyUpdate(partyVO);
 		
+		/*
 		out.println("<script>");
 		out.println("alert('수정완료!!!')");
 		out.println("location.href='selectByIdx?party_id="+partyVO.getParty_id()+"&currentPage="+currentPage+"&job=article'");
 		out.println("</script>");
 		out.flush();
-		
+		*/
 	}
 	
 	@RequestMapping("/partyDelete")
@@ -291,36 +349,40 @@ public class PartyController {
 		logger.info("PartyController의 partyDelete()");
 		
 		PartyDAO mapper = sqlSession.getMapper(PartyDAO.class);
-		PrintWriter out = getPrintWriter(response);
 		
 		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		
 		mapper.partyDelete(partyVO);
-		
+		/*
 		out.println("<script>");
 		out.println("alert('삭제완료!!!')");
 		out.println("location.href='list'");
 		out.println("</script>");
 		out.flush();
-		
+		*/
 	}
 	
-//	파일명 랜덤생성 메소드
+    // 공통 메소드
+    private void printScriptMessage(HttpServletResponse response, String scriptMessage) throws IOException {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<script>");
+        out.println(scriptMessage);
+        out.println("</script>");
+        out.flush();
+    }	
+	
+    // UUID
 	private String uploadFile(String originalName) {
 		UUID uuid = UUID.randomUUID();
 		String savedName =  uuid.toString()+"_"+originalName;
 	    return savedName;
 	}
-//	list 상단의 슬라이더 생성 메소드
-	private PartyList sliderList(PartyDAO mapper) {
+	
+	// list 상단의 슬라이더 생성 메소드
+	private PartyList sliderList(PartyService partyService) {
 		PartyList list = new PartyList();
-		list.setList(mapper.selectSlider());
+		list.setList(partyService.selectSlider());
 	    return list;
-	}
-//	PrintWriter
-	private PrintWriter getPrintWriter(HttpServletResponse response) throws IOException {
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-	    return out;
 	}
 }

@@ -3,9 +3,6 @@ package com.meokja.meokja;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,9 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.meokja.api.NaverSMTP;
 import com.meokja.dao.JoinDAO;
-import com.meokja.dao.PartyDAO;
 import com.meokja.service.JoinService;
 import com.meokja.service.PartyService;
 import com.meokja.vo.JoinList;
@@ -41,21 +36,13 @@ public class JoinController {
 	
 	@Autowired
 	private SqlSession sqlSession;
-	
-	@Autowired
-	JoinVO joinVO;
-	
+
 	@Autowired
 	MemberVO user;
 	
 	@Autowired
 	@Qualifier("partyVO")
 	PartyVO vo;
-	
-	@Autowired
-	JoinList joinList;
-	@Autowired
-	PartyList partyList;
 	
 	@Autowired
 	JoinService joinService;
@@ -133,10 +120,9 @@ public class JoinController {
 	public String joinCHK(HttpServletRequest request, HttpServletResponse response, Model model, JoinVO joinVO, HttpSession session) {
 		logger.info("line205 {}", joinVO);
 		
-		JoinDAO mapper = sqlSession.getMapper(JoinDAO.class);
 		user = (MemberVO) session.getAttribute("user");
 		joinVO.setMember_id(user.getMember_id());
-		int result = mapper.joinCHK(joinVO);
+		int result = joinService.joinCHK(joinVO);
 		
 		return String.valueOf(result);
 	}
