@@ -35,4 +35,6 @@ public interface PartyDAO {
 	void partyUpdate(PartyVO partyVO);
 	
 	void partyDelete(PartyVO partyVO);
+
+	PartyVO score_selectByparty_id(int party_id);
 }

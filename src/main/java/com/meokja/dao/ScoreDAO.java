@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.meokja.vo.MemberVO;
 import com.meokja.vo.PartyVO;
+import com.meokja.vo.ScoreVO;
 
 public interface ScoreDAO {
 
@@ -11,7 +12,6 @@ public interface ScoreDAO {
 
 	ArrayList<MemberVO> scoreMemeberList(ArrayList<String> member_idList);
 
-	PartyVO score_selectByparty_id(int party_id);
-
+	void scoreInsert(ScoreVO scoreVO);
 
 }

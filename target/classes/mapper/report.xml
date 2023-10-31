@@ -6,7 +6,7 @@
 	<!-- 신고자 추가 -->
 	<insert id="reportInsert" parameterType="ro">
 		INSERT INTO tb_report (report_id, member_id, party_id)
-			values(report_id_seq.nextval, #{member_id}, #{party_id})
+			values(TB_report_id_seq.nextval, #{member_id}, #{party_id})
 	</insert>
 	
 <!-- update -->

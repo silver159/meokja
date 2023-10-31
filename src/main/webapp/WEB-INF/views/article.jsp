@@ -229,12 +229,6 @@
 		                        <span class="font-sm letter-spacing-1">${jo.contents}</span>
 		                        <!-- 참여자 파티 탈퇴 버튼 -->
 	                    	</div>
-	                    	<!--
-				            <c:if test="{jo.member_id == user.memeber_id}">
-			            		<input class="btn btn-primary m-3" type="button" value="참여 취소"
-			            			onclick="join('참여 취소', ${jo.party_id}, ${currentPage}, ${jo.join_id})"/>
-							</c:if>
-							  -->
 	                	</div>
 	                	</c:if>
 						</c:forEach>
@@ -255,6 +249,6 @@
 	<jsp:include page="common/footer.jsp"></jsp:include>
 	
 	
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3770323a66e44a0f1eca043b6e64d109&libraries=services"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f50e7f27cb8ec5a0a9914ec9cf72359b&libraries=services"></script>
 	</body>
 	</html>

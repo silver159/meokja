@@ -65,6 +65,8 @@
 	<beans:bean id="joinService" class="com.meokja.service.JoinService"/>
 	<beans:bean id="partyService" class="com.meokja.service.PartyService"/>
 	<beans:bean id="memberService" class="com.meokja.service.MemberService"/>
+	<beans:bean id="reportService" class="com.meokja.service.ReportService"/>
+	<beans:bean id="scoreService" class="com.meokja.service.ScoreService"/>
 	
 	<!-- List 클래스의 bean -->
 	<beans:bean id="partyList" class="com.meokja.vo.PartyList"/>

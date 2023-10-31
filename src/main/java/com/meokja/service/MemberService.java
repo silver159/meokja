@@ -60,4 +60,12 @@ public class MemberService {
 		profileUpdateMessage += "location.href='list';";
 		return profileUpdateMessage;
 	}
+
+	public MemberVO selectById(String member_id) {
+		
+		logger.info("MemberService의 selectById()");
+		
+		MemberDAO mapper = sqlSession.getMapper(MemberDAO.class);
+		return mapper.selectById(member_id);
+	}
 }

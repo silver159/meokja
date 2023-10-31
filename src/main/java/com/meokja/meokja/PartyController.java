@@ -46,24 +46,19 @@ import com.meokja.vo.ReportVO;
 public class PartyController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PartyController.class);
-	
+
 	@Autowired
-	private SqlSession sqlSession;
-	
+	private MemberVO user;
 	@Autowired
-	MemberVO user;
+	private PartyVO partyVO;
 	@Autowired
-	JoinVO joinVO;
+	private MemberVO memberVO;
 	@Autowired
-	PartyVO partyVO;
+	private ReportVO reportVO;
 	@Autowired
-	MemberVO memberVO;
+	private JoinList joinList;
 	@Autowired
-	ReportVO reportVO;
-	@Autowired
-	JoinList joinList;
-	@Autowired
-	PartyList partyList;
+	private PartyList partyList;
 	
 	@Autowired
 	private PartyService partyService;
@@ -107,7 +102,6 @@ public class PartyController {
 		model.addAttribute("partyList", partyList);
 		model.addAttribute("sliderList", sliderList(partyService));
 		model.addAttribute("currentPage", currentPage);
-		System.out.println(new ReportVO());
 		return"list";
 	}
 	
@@ -137,61 +131,7 @@ public class PartyController {
 		
 		return"list";
 	}
-	/*
-	@RequestMapping("/selectByIdx")
-	public String selectByIdx(HttpServletResponse response, HttpServletRequest request, Model model, HttpSession session) throws IOException {
-		logger.info("PartyController의 selectByIdx()");
-		
-		user = (MemberVO) session.getAttribute("user");
-//		로그인이 되어있지 않을 경우
-		if (user == null) {
-		}else {
-			
-			PartyDAO partyMapper = sqlSession.getMapper(PartyDAO.class);
-			MemberDAO memberMapper = sqlSession.getMapper(MemberDAO.class);
-			ReportDAO ReportMapper = sqlSession.getMapper(ReportDAO.class);
-			JoinDAO joinMapper = sqlSession.getMapper(JoinDAO.class);
-			
-			
-//		넘어오는 데이터 2가지 받기		
-			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-			int	party_id = Integer.parseInt(request.getParameter("party_id"));
-			System.out.println(party_id);
-//		메인글 1건을 얻어오는 메소드를 호출한다.	
-			partyVO = partyMapper.selectByParty_id(party_id);
-			
-//		메인글 1건의 종속한 Join List를 얻어온다.
-			joinList.setList(joinMapper.selectJoinList(party_id));
-			logger.info("line162 {}", joinList);
-			logger.info("line162 {}", joinMapper.selectJoinList(party_id));
-			
-//		메인글의 모임장 정보를 가져온다.
-			System.out.println(partyVO);
-			memberVO = memberMapper.selectById(partyVO.getMember_id());
-			logger.info("line162 {}", memberVO);
-			
-//		메인글의 내가 신고한 내역이 있는지 확인한다.
-			reportVO.setMember_id(user.getMember_id());
-			reportVO.setParty_id(party_id);
-			logger.info("line167 {}", reportVO);
-//		메인글 1건의 종속한 report DB 중 회원정보한 일치한 report 조회
-			int reportCount = ReportMapper.reportCount(reportVO);
-			
-			String isReport = reportCount == 0 ? "N" : "Y";
-			logger.info("{} line254", isReport);
-			
-			model.addAttribute("master", memberVO);
-			model.addAttribute("isReport", isReport);
-			model.addAttribute("joinList", joinList);
-			model.addAttribute("vo", partyVO);
-			model.addAttribute("currentPage", currentPage);
-			model.addAttribute("enter", "\r\n");
-		}
 
-		String job = request.getParameter("job");
-		return job;
-	}
-	*/
 	// 선택한 들어가기
 	@RequestMapping("/selectByIdx")
 	public String selectByIdx(HttpServletResponse response, HttpServletRequest request, Model model, HttpSession session) throws IOException {
@@ -199,7 +139,9 @@ public class PartyController {
 		user = (MemberVO) session.getAttribute("user");
 //		로그인이 되어있지 않을 경우
 		if (user == null) {
-			
+			String warnnigMessage = "alert('로그인 후 이용해주세요.');\n";
+			warnnigMessage += "location.href='loginPage';";
+			printScriptMessage(response, warnnigMessage);
 		}else {
 			
 			// 넘어오는 데이터 2가지 받기		
@@ -223,10 +165,10 @@ public class PartyController {
 			reportVO.setParty_id(party_id);
 			logger.info("line167 {}", reportVO);
 //		메인글 1건의 종속한 report DB 중 회원정보한 일치한 report 조회
-			int reportCount = ReportMapper.reportCount(reportVO);
-			
+			int reportCount = reportService.reportCount(reportVO);
+			logger.info("line175 {}", reportCount);
 			String isReport = reportCount == 0 ? "N" : "Y";
-			logger.info("{} line254", isReport);
+			logger.info("{} line177", isReport);
 			
 			model.addAttribute("master", memberVO);
 			model.addAttribute("isReport", isReport);
@@ -240,76 +182,74 @@ public class PartyController {
 		return job;
 	}
 	
+	// 모임 생성
 	@RequestMapping("/partyInsert")
 	public String partyInsert(MultipartHttpServletRequest request, Model model, HttpSession session, PartyVO partyVO) {
 		logger.info("PartyController의 partyInsert()");
-		PartyDAO partyMapper = sqlSession.getMapper(PartyDAO.class);
 		logger.info("{}", partyVO);
 		
+		// 저장 위치 지정
 		String rootUplordDir = "C:" + File.separator + "upload" + File.separator + "thumbnail"; // C:\Upload\thumbnail
-	    
+		// 파일 저장
 		Iterator<String> iterator = request.getFileNames();
-	    MultipartFile multipartFile = null;
-	    String uploadFilename = iterator.next();
-	    multipartFile = request.getFile(uploadFilename);
+		MultipartFile multipartFile = null;
+		String uploadFilename = iterator.next();
+		multipartFile = request.getFile(uploadFilename);
 //	    logger.info("uploadFilename: {}", uploadFilename);
-	    String originalName = multipartFile.getOriginalFilename();
+		String originalName = multipartFile.getOriginalFilename();
 //	    logger.info("originalName: {}", originalName);
-	    String photo = uploadFile(originalName);
-	    logger.info("photo: {}", photo);
-	    
-	    if(originalName != null && originalName.length() != 0) {
-	    	try {
-	    		multipartFile.transferTo(new File(rootUplordDir + File.separator + photo));
-	        } catch (Exception e) {}
-	    }
-	      
+		String photo = uploadFile(originalName);
+		logger.info("photo: {}", photo);
+		
+		if(originalName != null && originalName.length() != 0) {
+			try {
+				multipartFile.transferTo(new File(rootUplordDir + File.separator + photo));
+			} catch (Exception e) {}
+		}
+		
+		logger.info("{}", partyVO);
+		String dateObject1 = request.getParameter("dateObject1");
+		String dateObject2 = request.getParameter("dateObject2"); 
+		String combinedDateTimeString1 = dateObject1 + " " + dateObject2;
+		SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Date mealDate = null;
+		try {
+			mealDate = dateTimeFormat.parse(combinedDateTimeString1);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		partyVO.setMealed_at(mealDate);
+		partyVO.setThumbnail(photo);
 	    logger.info("{}", partyVO);
-	    String dateObject1 = request.getParameter("dateObject1");
-	    String dateObject2 = request.getParameter("dateObject2"); 
-	    String combinedDateTimeString1 = dateObject1 + " " + dateObject2;
-	    SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-	    Date mealDate = null;
-	    try {
-	        mealDate = dateTimeFormat.parse(combinedDateTimeString1);
-	        System.out.println(mealDate);
-	    } catch (ParseException e) {
-	        e.printStackTrace();
-	    }
-	    partyVO.setMealed_at(mealDate);
-	    partyVO.setThumbnail(photo);
-	      
-//	    logger.info("{}", party VO);
-	    
-	    partyMapper.insert(partyVO);
-	    
-	    user = (MemberVO) session.getAttribute("user");
-	    
-	    return "redirect:list";
-	}
-	   
-	@RequestMapping("/mylist")
-	public String mylist(HttpServletRequest request, Model model, HttpSession session) {
-		logger.info("PartyController의 mylist()");
-		PartyDAO partyMapper = sqlSession.getMapper(PartyDAO.class);
+		
+		partyService.insert(partyVO);
 		
 		user = (MemberVO) session.getAttribute("user");
 		
+		return "redirect:list";
+	}
+	
+	// 유저별 모임 리스트
+	@RequestMapping("/mylist")
+	public String mylist(HttpServletRequest request, Model model, HttpSession session) {
+		
+		logger.info("PartyController의 mylist()");
+		user = (MemberVO) session.getAttribute("user");
 		logger.info("line251 {}", user);
-//		생성한 모임 리스트
+		
+		// 생성한 모임 리스트
 		PartyList list_create = new PartyList();
-		list_create.setList(partyMapper.create_myList(user));
+		list_create.setList(partyService.create_myList(user));
 		logger.info("line255 {}", list_create);
 		
 //		참여한 모임 리스트
 		PartyList list_join = new PartyList();
-		list_join.setList(partyMapper.join_myList(user));
+		list_join.setList(partyService.join_myList(user));
 		logger.info("line260 {}", list_join);
-		
 		
 //		평가할 모임 리스트(작업중)
 		PartyList list_score = new PartyList();
-		list_score.setList(partyMapper.score_myList(user));
+		list_score.setList(partyService.score_myList(user));
 		
 		logger.info("line260 {}", list_score);
 		
@@ -323,43 +263,23 @@ public class PartyController {
 		return "mylist";
 	}
 	
-	
+	// 모임 수정
 	@RequestMapping("/partyUpdate")
 	public void partyUpdate(HttpServletResponse response, HttpServletRequest request, PartyVO partyVO) throws IOException {
 		logger.info("PartyController의 partyUpdate()");
 		logger.info("line272 {}", partyVO);
 		
-		PartyDAO mapper = sqlSession.getMapper(PartyDAO.class);
-		
 		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		
-		mapper.partyUpdate(partyVO);
-		
-		/*
-		out.println("<script>");
-		out.println("alert('수정완료!!!')");
-		out.println("location.href='selectByIdx?party_id="+partyVO.getParty_id()+"&currentPage="+currentPage+"&job=article'");
-		out.println("</script>");
-		out.flush();
-		*/
+		printScriptMessage(response, partyService.partyUpdate(partyVO, currentPage));
 	}
 	
+	// 모임 삭제
 	@RequestMapping("/partyDelete")
 	public void partyDelete(HttpServletResponse response, HttpServletRequest request, PartyVO partyVO) throws IOException {
 		logger.info("PartyController의 partyDelete()");
 		
-		PartyDAO mapper = sqlSession.getMapper(PartyDAO.class);
-		
-		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		
-		mapper.partyDelete(partyVO);
-		/*
-		out.println("<script>");
-		out.println("alert('삭제완료!!!')");
-		out.println("location.href='list'");
-		out.println("</script>");
-		out.flush();
-		*/
+		printScriptMessage(response, partyService.partyDelete(partyVO));
 	}
 	
     // 공통 메소드

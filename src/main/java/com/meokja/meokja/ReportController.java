@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.meokja.dao.PartyDAO;
 import com.meokja.dao.ReportDAO;
+import com.meokja.service.ReportService;
 import com.meokja.vo.MemberVO;
 import com.meokja.vo.ReportVO;
 
@@ -31,39 +32,29 @@ public class ReportController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ReportController.class);
 	
-	
 	@Autowired
-	private SqlSession sqlSession; 
+	private ReportService reportService;
 	
 	@RequestMapping("/reportInsert")
 	public void reportInsert(HttpServletRequest request, HttpServletResponse response, HttpSession session, ReportVO reportVO) throws IOException {
 		logger.info("ReportController의 reportInsert()");
-		logger.info("46line {}",reportVO);
-		
-		ReportDAO mapper = sqlSession.getMapper(ReportDAO.class);
 		
 		// 회원정보
 		MemberVO user = (MemberVO) session.getAttribute("user");
-		reportVO.setMember_id(user.getMember_id());
-
-		mapper.reportInsert(reportVO);
-		// 신고수 증가
-		
-		
 		int currentPage = Integer.parseInt( request.getParameter("currentPage"));
-
-		PrintWriter out = getPrintWriter(response);
-		out.println("<script>");
-		out.println("alert('신고 완료!!!')");
-		out.println("location.href='selectByIdx?party_id="+reportVO.getParty_id()+"&currentPage="+currentPage+"&job=article'");
-		out.println("</script>");
-		out.flush();
+		reportVO.setMember_id(user.getMember_id());
+		logger.info("48line {}",reportVO);
+		
+		printScriptMessage(response, reportService.reportInsert(reportVO, currentPage));
 	}
 	
-//	PrintWriter
-	private PrintWriter getPrintWriter(HttpServletResponse response) throws IOException {
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-	    return out;
-	}
+    // 공통 메소드
+    private void printScriptMessage(HttpServletResponse response, String scriptMessage) throws IOException {
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        out.println("<script>");
+        out.println(scriptMessage);
+        out.println("</script>");
+        out.flush();
+    }
 }

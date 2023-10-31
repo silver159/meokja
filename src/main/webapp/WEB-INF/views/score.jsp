@@ -22,8 +22,17 @@
 <link rel="stylesheet" href="common/slick-carousel/slick.css">					<!-- slick -->
 <script src="common/slick-carousel/slick.min.js"></script>						<!-- slick -->
 <script type="text/javascript" src="js/loginCheck.js" defer="defer"></script>
-<!-- private -->
 
+<!-- private -->
+<script type="text/javascript" src="js/score.js" defer="defer"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+<style type="text/css">
+	.star {
+		cursor: pointer;
+		color: #dabd18b2;
+		font-size: 25px;
+	}
+</style>
 
 
 </head>

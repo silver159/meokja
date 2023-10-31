@@ -25,11 +25,16 @@
 <script src="common/slick-carousel/slick.min.js"></script>						<!-- slick -->
 <!-- private -->
 <script type="text/javascript" src="js/mylist.js"></script>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 <style type="text/css">
 
 	#score_box {
 		cursor: pointer;
+	}
+	.star {
+		cursor: pointer;
+		color: #dabd18b2;
+		font-size: 25px;
 	}
 
 </style>
@@ -65,7 +70,7 @@ ${list_score}
 			<c:if test="${vo.reportCount < 2}">
 			<div class="col-lg-3 col-md-6">
 				<article class="post-grid mb-5">
-					<form class="post-thumb mb-4 d-block score_box" action="score" method="post">
+					<form class="post-thumb mb-4 d-block score_box" action="scorePage" method="post">
 						<img src="upload/thumbnail/${vo.thumbnail}" class="img-fluid" style="height: 210px; width: 250px; border-radius: 50px;">
 						<span class="text-color font-lg font-extra text-uppercase letter-spacing" style="display: block">${vo.food_category}</span><br/>
 						<span class="post-title mt-1">${vo.subject}</span><br/>

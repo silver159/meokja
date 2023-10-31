@@ -38,17 +38,17 @@ public class JoinController {
 	private SqlSession sqlSession;
 
 	@Autowired
-	MemberVO user;
+	private MemberVO user;
 	
 	@Autowired
 	@Qualifier("partyVO")
-	PartyVO vo;
+	private PartyVO vo;
 	
 	@Autowired
-	JoinService joinService;
+	private JoinService joinService;
 	
 	@Autowired
-	PartyService partyService;
+	private PartyService partyService;
 	
 	// 파티 참여
     @RequestMapping(value = "/joinInsert", method = RequestMethod.POST)
@@ -59,28 +59,6 @@ public class JoinController {
     	
     	return joinInsert + "&currentPage=" + currentPage;
     }
-	
-    // 확인바람
-	@RequestMapping(value = "/joinServlet", method = RequestMethod.POST)
-	@ResponseBody
-	public String repleServlet(HttpServletRequest request, Model model, PartyVO partyVO) {
-		logger.info("JoinController의 joinServlet()");
-		JoinDAO mapper = sqlSession.getMapper(JoinDAO.class);
-		logger.info("{} line134", partyVO);
-		
-		// 세션에 저장된 회원정보
-		HttpSession session = request.getSession();
-		MemberVO user = (MemberVO) session.getAttribute("user");
-		
-		
-// 수정할 코드
-		int result = 0;
-//		int result = mapper.selectById_Idx(reportVO);
-		// 1있다. 0 없다.
-		logger.info("{} line140", result);
-		
-		return String.valueOf(result);
-	}
 	
 	// 모임 수락
 	@RequestMapping(value = "/joinOK", method = RequestMethod.GET)

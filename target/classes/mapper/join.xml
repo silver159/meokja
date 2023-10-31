@@ -55,7 +55,7 @@
 	<!-- 데이터 생성 -->
 	<insert id="joinInsert" parameterType="jo">
 		insert into tb_join (join_id, party_id, member_id, contents) 
-    		values (join_id_seq.nextval, #{party_id}, #{member_id}, #{contents})
+    		values (TB_join_id_seq.nextval, #{party_id}, #{member_id}, #{contents})
 	</insert>
 	
 </mapper>

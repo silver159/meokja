@@ -5,7 +5,7 @@
 	<!-- 메인글 저장 (수정완료) -->
 	<insert id="insert" parameterType="vo">
 		insert into tb_party (party_id, member_id, food_category, local_category, subject, contents, map, mealed_at, thumbnail, limitNum, status) 
-		values (party_id_seq.nextval, #{member_id}, #{food_category}, #{local_category}, #{subject}, #{contents}, #{map}, #{mealed_at}, #{thumbnail}, #{limitNum}, '일반')
+		values (TB_PARTY_idx_seq.nextval, #{member_id}, #{food_category}, #{local_category}, #{subject}, #{contents}, #{map}, #{mealed_at}, #{thumbnail}, #{limitNum}, '일반')
 	</insert>
 	
 	<!-- 전체 메인글 개수 (수정완료)-->
@@ -150,6 +150,11 @@
 					and mealed_at > SYSDATE
 				order by mealed_at
 		)  <![CDATA[WHERE ROWNUM <= 6]]>
+	</select>
+	
+	<select id="score_selectByparty_id" parameterType="int" resultType="vo">
+		select * from tb_party
+			where party_id = #{party_id}
 	</select>
 	
 	<!-- 파티 수정 -->
