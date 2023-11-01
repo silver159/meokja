@@ -44,7 +44,6 @@
 
 <!-- header -->
 <jsp:include page="common/header.jsp"></jsp:include>
-${list_score}
 
 <section class="single-block-wrapper section-padding">
 <div class="container">

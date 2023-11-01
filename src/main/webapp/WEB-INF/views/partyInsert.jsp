@@ -119,7 +119,7 @@
                 	<h5 class="mb-3 text-center">식사 시간</h5>
                     	<div class="row mb-3">
 	                        <div class="col-lg-6">
-	                        	<input type="date" class="form-control" name="dateObject1" onclick="dateOK()"/>
+	                        	<input type="date" class="form-control" name="dateObject1" onclick="dateOK()" id="dateInput"/>
 	                        </div>
 	                        <div class="col-lg-6">
 	                        	<input type="time" class="form-control" name="dateObject2" value="12:00" min="00:00" max="23:59" onchange="timeOK(this)">
@@ -159,18 +159,16 @@
 					<div class="col-lg-2"></div>
                      <!-- 글 내용 -->
 					<div class="col-lg-12 pt-3">
-						<textarea class="form-control mb-4" name="contents" rows="11"  placeholder="내용" style="resize: none;">글 내용</textarea>
+						<textarea class="form-control mb-4" name="contents" rows="11"  placeholder="내용" style="resize: none;"></textarea>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-lg-12 text-center">
-                    	<input class="btn btn-primary mb-3" type="submit" value="생성하기"/><br/>
-					<div class="btn-group">
+                    	<input class="btn btn-primary" type="submit" value="생성하기"/>
                     	<input class="btn btn-primary" type="reset" value="다시쓰기"/>
                         <input class="btn btn-primary" type="button" value="돌아가기" onclick="history.back()"/>
 					</div>
 				</div>
-			</div>
                <!-- (hidden) ip, 작성자 ID, 작성자 nickname -->
                <input type="hidden" name="member_id" value="${user.member_id}"/>
             </form>

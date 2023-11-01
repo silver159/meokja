@@ -31,8 +31,6 @@
 	<!-- header -->
 	<jsp:include page="common/header.jsp"></jsp:include>
 
-	${partyList.list[0]}
-
 	<fmt:requestEncoding value="UTF-8" />
 
 	<section class="slider mt-4">
@@ -56,6 +54,7 @@
 									<span class=" text-muted  text-capitalize">
 										<fmt:formatDate	value="${so.mealed_at}" pattern="yy.MM.dd HH시mm분"/>
 									</span>
+									<span class="py-1">${so.map}</span>
 								</div>
 							</div>
 						</div>
@@ -164,6 +163,7 @@
 										</span><br/>
 										<span class="post-title">${vo.subject}</span><br/>
 										<span class="py-1">${vo.local_category}</span>
+										<span class="py-1">${vo.map}</span>
 									</a>
 								</article>
 							</div>

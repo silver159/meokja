@@ -32,12 +32,6 @@ public class PageController {
 		return "member";
 	}
 	
-	@RequestMapping("/test")
-	public String test() {
-		logger.info("PageController의 test()");
-		return "test";
-	}
-	
 	@RequestMapping("/idSerchPage")
 	public String idSerchPage() {
 		logger.info("PageController의 loginPage()");

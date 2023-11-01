@@ -1,15 +1,26 @@
 /*==================현재 시간 찍어주는 코드 ===================*/
 
 $(() =>{
-   let now = new Date();
-   let currentHour = now.getHours();
-   let currentMinute = now.getMinutes();
+	let now = new Date();
+    let currentHour = now.getHours();
+    let currentMinute = now.getMinutes();
 
-   let hour = String(currentHour).padStart(2, "0");
-   let minute = String(currentMinute).padStart(2, "0");
+    let hour = String(currentHour).padStart(2, "0");
+    let minute = String(currentMinute).padStart(2, "0");
 
-   $('input[name=dateObject2]').val(`${hour}:${minute}`);
+    $('input[name=dateObject2]').val(`${hour}:${minute}`);
    
+    // 현재 날짜를 가져오는 함수
+    function getCurrentDate() {
+    	const today = new Date();
+		const year = today.getFullYear();
+		const month = (today.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅
+		const day = today.getDate().toString().padStart(2, '0'); // 일도 두 자리로 포맷팅
+		return `${year}-${month}-${day}`;
+    }
+
+    // 현재 날짜를 기본값으로 설정
+    document.getElementById('dateInput').value = getCurrentDate();
 });
 
 // 파일 업로드 함수 시작
@@ -33,9 +44,9 @@ $(() =>{
 /*=================날짜 제한 시작 ===========================*/
 
 function dateOK() {
-  let mealDate = $('input[name=dateObject1]');
-  let today = new Date();
-  // 선택한 날짜가 오늘 이전인 경우
+	let mealDate = $('input[name=dateObject1]');
+	let today = new Date();
+	// 선택한 날짜가 오늘 이전인 경우
     let minDate = new Date(today);
     minDate.setDate(minDate.getDate()); // 전날을 선택할 수 없도록 설정
 
@@ -81,7 +92,7 @@ function timeOK() {
 /*================입력 체크 시작 =============================*/
 function partyInsertOK (){
    
-   let subject =  $('input[name=party_subject]').val();
+   let subject =  $('input[name=subject]').val();
    let map = $('input[name=map]').val();
    let contents = $('textarea[name=contents]').val();
    let food_category = $('select').eq(0).val();
