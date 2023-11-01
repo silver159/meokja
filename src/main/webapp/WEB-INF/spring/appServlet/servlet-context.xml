@@ -59,6 +59,7 @@
 	<beans:bean id="partyVO" class="com.meokja.vo.PartyVO"/>
 	<beans:bean id="joinVO" class="com.meokja.vo.JoinVO"/>
 	<beans:bean id="reportVO" class="com.meokja.vo.ReportVO"/>
+	<beans:bean id="scoreVO" class="com.meokja.vo.ScoreVO"/>
 	
 	<!-- service 클래스의 bean -->
 	<beans:bean id="loginService" class="com.meokja.service.LoginService"/>
@@ -67,6 +68,7 @@
 	<beans:bean id="memberService" class="com.meokja.service.MemberService"/>
 	<beans:bean id="reportService" class="com.meokja.service.ReportService"/>
 	<beans:bean id="scoreService" class="com.meokja.service.ScoreService"/>
+	<beans:bean id="bookmarkService" class="com.meokja.service.BookmarkService"/>
 	
 	<!-- List 클래스의 bean -->
 	<beans:bean id="partyList" class="com.meokja.vo.PartyList"/>

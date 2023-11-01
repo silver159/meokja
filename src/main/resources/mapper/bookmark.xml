@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.meokja.dao.BookmarkDAO">
+	
+	<!-- 내가 즐겨찾기한 모임 리스트 -->
+	<select id="bookmarkList" parameterType="mo" resultType="vo">
+		SELECT tb_party.* FROM tb_party
+		    INNER JOIN tb_bookmark
+		        ON tb_party.party_id = tb_bookmark.party_id
+		    WHERE tb_bookmark.member_id = #{member_id}
+	</select>
+	
+	<!-- 로그인한 유저별로 즐겨찾기 여부를 체크한다. -->
+	<select id="bookmarkChk" parameterType="java.util.Map" resultType="int">
+		SELECT count(*) FROM tb_party
+		    INNER JOIN tb_bookmark
+		        ON tb_party.party_id = tb_bookmark.party_id
+		    WHERE tb_bookmark.member_id = #{member_id} 
+		    	and tb_bookmark.party_id = #{party_id} 
+	</select>
+	
+	<insert id="bookmarkInsert" parameterType="java.util.Map">
+		INSERT INTO tb_bookmark (bookmark_id, member_id, party_id)
+			values(tb_bookmark_idx_seq.nextval, #{member_id}, #{party_id})
+	</insert>
+	
+	<delete id="bookmarkDelete" parameterType="java.util.Map">
+		DELETE FROM tb_bookmark
+		    where member_id = #{member_id} and party_id = #{party_id}
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+
+
+

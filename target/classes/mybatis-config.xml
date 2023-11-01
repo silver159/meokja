@@ -8,6 +8,7 @@
 		<typeAlias type="com.meokja.vo.JoinVO" alias="jo"/>
 		<typeAlias type="com.meokja.vo.ReportVO" alias="ro"/>
 		<typeAlias type="com.meokja.vo.ScoreVO" alias="so"/>
+		<typeAlias type="com.meokja.vo.BookmarkVO" alias="bo"/>
 		<typeAlias type="com.meokja.vo.Param" alias="param"/>
 	</typeAliases>
 </configuration>

@@ -29,6 +29,7 @@ import com.meokja.dao.JoinDAO;
 import com.meokja.dao.MemberDAO;
 import com.meokja.dao.PartyDAO;
 import com.meokja.dao.ReportDAO;
+import com.meokja.service.BookmarkService;
 import com.meokja.service.JoinService;
 import com.meokja.service.MemberService;
 import com.meokja.service.PartyService;
@@ -71,6 +72,9 @@ public class PartyController {
 	
 	@Autowired
 	private JoinService joinService;
+	
+	@Autowired
+	private BookmarkService bookmarkService;
 	
 	// 검색어 없는 요청
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -160,20 +164,25 @@ public class PartyController {
 			memberVO = memberService.selectById(partyVO.getMember_id());
 			logger.info("line162 {}", memberVO);
 			
-//		메인글의 내가 신고한 내역이 있는지 확인한다.
+			// 메인글의 내가 신고한 내역이 있는지 확인한다.
 			reportVO.setMember_id(user.getMember_id());
 			reportVO.setParty_id(party_id);
 			logger.info("line167 {}", reportVO);
-//		메인글 1건의 종속한 report DB 중 회원정보한 일치한 report 조회
+			
+			// 메인글 1건의 종속한 report DB 중 회원정보한 일치한 report 조회
 			int reportCount = reportService.reportCount(reportVO);
 			logger.info("line175 {}", reportCount);
 			String isReport = reportCount == 0 ? "N" : "Y";
 			logger.info("{} line177", isReport);
 			
+			// 즐겨찾기 여부 확인힌다.
+			boolean bookmarkChk = bookmarkService.bookmarkChk(party_id, user.getMember_id());
+			
 			model.addAttribute("master", memberVO);
 			model.addAttribute("isReport", isReport);
 			model.addAttribute("joinList", joinList);
 			model.addAttribute("vo", partyVO);
+			model.addAttribute("bookmarkChk", bookmarkChk);
 			model.addAttribute("currentPage", currentPage);
 			model.addAttribute("enter", "\r\n");
 		}
@@ -242,22 +251,22 @@ public class PartyController {
 		list_create.setList(partyService.create_myList(user));
 		logger.info("line255 {}", list_create);
 		
-//		참여한 모임 리스트
+		// 참여한 모임 리스트
 		PartyList list_join = new PartyList();
 		list_join.setList(partyService.join_myList(user));
 		logger.info("line260 {}", list_join);
 		
-//		평가할 모임 리스트(작업중)
+		// 평가할 모임 리스트(작업중)
 		PartyList list_score = new PartyList();
 		list_score.setList(partyService.score_myList(user));
 		
 		logger.info("line260 {}", list_score);
 		
-//		생성한 모임 리스트
+		// 생성한 모임 리스트
 		model.addAttribute("list_create", list_create);
-//		참여한 모임 리스트
+		// 참여한 모임 리스트
 		model.addAttribute("list_join", list_join);
-//		평가할 모임 리스트
+		// 평가할 모임 리스트
 		model.addAttribute("list_score", list_score);
 		
 		return "mylist";

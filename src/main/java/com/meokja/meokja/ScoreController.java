@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.meokja.dao.ScoreDAO;
 import com.meokja.service.PartyService;
 import com.meokja.service.ScoreService;
 import com.meokja.vo.MemberList;
@@ -38,6 +37,9 @@ public class ScoreController {
 	
 	@Autowired
 	MemberVO memberVO;
+	
+	@Autowired
+	ScoreVO scoreVO;
 	
 	@Autowired
 	MemberList memberList;
@@ -91,29 +93,25 @@ public class ScoreController {
 	@ResponseBody
 	public Map<String, String> score(Model model, @RequestBody HashMap<String, Object> data) {
 		System.out.println("ScoreController의 score");
-//		ScoreDAO mapper = null;
-		
-		System.out.println(data);
+		logger.info("94line {}", data);
 		
 		List<String> member_idList = (List<String>) data.get("member_id");
 		List<Integer> scoreList = (List<Integer>) data.get("score");
 		int party_id = (Integer) data.get("party_id");
 		
-		System.out.println(party_id);
-		System.out.println(member_idList);
-		System.out.println(scoreList.get(0));
+		logger.info("100line {}", party_id);
+		logger.info("101line {}", member_idList);
+		logger.info("102line {}", scoreList.get(0));
 		for(int i = 0; i < scoreList.size(); i++) {
-			ScoreVO scoreVO = new ScoreVO();
 			scoreVO.setMember_id(member_idList.get(0));
 			scoreVO.setScore(scoreList.get(0));
 			scoreVO.setParty_id(party_id);
-//			mapper.scoreInsert(scoreVO);
+			scoreService.scoreInsert(scoreVO);
 		}
 		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("result", "success");
 		map.put("message", "평가 완료");
-		
 		return map;
 	}
 }

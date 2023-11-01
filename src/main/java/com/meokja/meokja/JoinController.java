@@ -33,9 +33,6 @@ import com.meokja.vo.PartyVO;
 public class JoinController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(JoinController.class);
-	
-	@Autowired
-	private SqlSession sqlSession;
 
 	@Autowired
 	private MemberVO user;

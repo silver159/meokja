@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.meokja.dao.ScoreDAO;
 import com.meokja.vo.MemberVO;
 import com.meokja.vo.PartyVO;
+import com.meokja.vo.ScoreVO;
 
 @Service
 public class ScoreService {
@@ -35,6 +36,14 @@ public class ScoreService {
 		ScoreDAO mapper = sqlSession.getMapper(ScoreDAO.class);		
 		return mapper.scoreMemeberList(id_list);		
 		
+	}
+
+	public void scoreInsert(ScoreVO scoreVO) {
+		
+		logger.info("ScoreService의 scoreInsert()");
+		
+		ScoreDAO mapper = sqlSession.getMapper(ScoreDAO.class);	
+		mapper.scoreInsert(scoreVO);
 	}
 	
 }

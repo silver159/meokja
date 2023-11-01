@@ -26,6 +26,7 @@
 	                	<li class="nav-item"><a href="#" onclick="loginCheck('partyInsert')" class="nav-link" style="font-size: 20px;">파티생성</a></li>
 	                    <li class="nav-item"><a href="list" class="nav-link" style="font-size: 20px;">파티목록</a></li>
 	                    <li class="nav-item"><a href="#" onclick="loginCheck('mylist')" class="nav-link" style="font-size: 20px;">파티관리</a></li>
+	                    <li class="nav-item"><a href="#" onclick="loginCheck('bookmark')" class="nav-link" style="font-size: 20px;">즐겨찾기</a></li>
 	                </ul>
 	        	</div>
 			</nav>
