@@ -136,7 +136,7 @@ public class PartyController {
 		return"list";
 	}
 
-	// 선택한 들어가기
+	// 선택한 모임에 들어가기
 	@RequestMapping("/selectByIdx")
 	public String selectByIdx(HttpServletResponse response, HttpServletRequest request, Model model, HttpSession session) throws IOException {
 		logger.info("PartyController의 selectByIdx()");

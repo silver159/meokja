@@ -53,10 +53,10 @@
 	        <if test="condition == '내용+파티명'">
 	            and (contents LIKE '%' || #{item} || '%' OR subject LIKE '%' || #{item} || '%')
 	        </if>
-	         <if test="location != '전국'">
+	         <if test="local_category != '전국'">
 	         	 and local_category = #{local_category}
 	        </if>
-	         <if test="category != '음식 카테고리'">
+	         <if test="food_category != '음식 카테고리'">
 	         	 and food_category = #{food_category}
 	        </if>
 	        and status = '일반' and mealed_at > SYSDATE
@@ -78,10 +78,10 @@
 	                <if test="condition == '내용+파티명'">
 	                    and (contents LIKE '%' || #{item} || '%' OR subject LIKE '%' || #{item} || '%') 
 	                </if>
-	                <if test="location != '전국'">
+	                <if test="local_category != '전국'">
 			         	 and local_category = #{local_category}
 			        </if>
-			         <if test="category != '음식 카테고리'">
+			         <if test="food_category != '음식 카테고리'">
 			         	 and food_category = #{food_category}
 			        </if>
 			        and status = '일반'and mealed_at > SYSDATE

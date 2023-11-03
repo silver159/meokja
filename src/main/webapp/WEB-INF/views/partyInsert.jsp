@@ -43,7 +43,7 @@
       <div class="row">
          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12">
-            <form class="comment-form mb-5 bg-grey p-5" action="partyInsert" method="post" enctype="multipart/form-data" onsubmit="return partyInsertOK()">
+            <form class="comment-form mb-5 bg-grey p-5" action="partyInsert" method="post" enctype="multipart/form-data" onsubmit="return partyInsertOK();">
                <h3 class="mb-4 text-center">먹방 생성</h3>
                <div class="row">
                   <!-- 파티 명 -->

@@ -153,8 +153,8 @@
 												<div class="col-lg-12 text-right">
 													<!-- 즐겨찾기 -->
 													<c:if test="${bookmarkChk == true && master.member_id != user.member_id}">
-														<input id="bookmarkInsert" class="btn btn-primary" type="button" value="즐겨찾기 취소" onclick="bookmark(this)" data-partyid="${vo.party_id}" data-currentPage="${currentPage}" data-where="bookmarkDelete"/>
-														<input id="bookmarkDelete" class="btn btn-primary" type="hidden" value="즐겨찾기" onclick="bookmark(this)" data-partyid="${vo.party_id}" data-currentPage="${currentPage}" data-where="bookmarkInsert"/>
+														<input id="bookmarkDelete" class="btn btn-primary" type="button" value="즐겨찾기 취소" onclick="bookmark(this)" data-partyid="${vo.party_id}" data-currentPage="${currentPage}" data-where="bookmarkDelete"/>
+														<input id="bookmarkInsert" class="btn btn-primary" type="hidden" value="즐겨찾기" onclick="bookmark(this)" data-partyid="${vo.party_id}" data-currentPage="${currentPage}" data-where="bookmarkInsert"/>
 													</c:if>
 													<c:if test="${bookmarkChk == false && master.member_id != user.member_id}">
 														<input id="bookmarkInsert" class="btn btn-primary" type="button" value="즐겨찾기" onclick="bookmark(this)" data-partyid="${vo.party_id}" data-currentPage="${currentPage}" data-where="bookmarkInsert"/>

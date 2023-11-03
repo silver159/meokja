@@ -52,7 +52,7 @@
 								<c:if test="${bo.reportCount < 2}">
 									<div class="col-lg-3 col-md-6">
 										<article class="post-grid mb-5">
-											<a class="post-thumb mb-4 d-block" href="selectByIdx?party_id=${vo.party_id}&currentPage=1&job=article">
+											<a class="post-thumb mb-4 d-block" href="selectByIdx?party_id=${bo.party_id}&currentPage=1&job=article">
 												<img src="upload/thumbnail/${bo.thumbnail}" class="img-fluid" style="height: 210px; width: 250px; border-radius: 50px;">
 												<span class="text-color font-lg font-extra text-uppercase letter-spacing" style="display: block">${vo.food_category}</span><br/>
 												<span class="post-title mt-1">${bo.subject}</span><br/>

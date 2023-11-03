@@ -9,18 +9,21 @@ $(() =>{
     let minute = String(currentMinute).padStart(2, "0");
 
     $('input[name=dateObject2]').val(`${hour}:${minute}`);
-   
-    // 현재 날짜를 가져오는 함수
-    function getCurrentDate() {
-    	const today = new Date();
-		const year = today.getFullYear();
-		const month = (today.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅
-		const day = today.getDate().toString().padStart(2, '0'); // 일도 두 자리로 포맷팅
-		return `${year}-${month}-${day}`;
-    }
-
-    // 현재 날짜를 기본값으로 설정
-    document.getElementById('dateInput').value = getCurrentDate();
+ 
+    
+//    // 현재 날짜를 가져오는 함수
+//    function getCurrentDate() {
+//    	const today = new Date();
+//		const year = today.getFullYear();
+//		const month = (today.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅
+//		const day = today.getDate().toString().padStart(2, '0'); // 일도 두 자리로 포맷팅
+//		return `${year}-${month}-${day}`;
+//    }
+//
+//    // 현재 날짜를 기본값으로 설정
+//    document.getElementById('dateInput').value = getCurrentDate();
+    console.log($('input[name=dateObject1]').val());
+    
 });
 
 // 파일 업로드 함수 시작
@@ -97,7 +100,7 @@ function partyInsertOK (){
    let contents = $('textarea[name=contents]').val();
    let food_category = $('select').eq(0).val();
    let local_category = $('select').eq(1).val();
-   let limitNum = $('input[name=limitNum]').val();
+   let limitNum = $('select[name=limitNum]').val();
    let mealed_at = $('input[name=dateObject1]').val();
    let fileName = $('input[name=fileName]').val();
    let pattern = new RegExp('^[0-9]+$');
@@ -130,6 +133,7 @@ function partyInsertOK (){
       alert('지역을 선택하세요');
       return false;
    }
+   console.log('gg');
    
    if(limitNum.length == 0 || limitNum == '') {
       alert('인원을 선택하세요');
