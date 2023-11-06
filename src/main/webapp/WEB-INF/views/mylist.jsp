@@ -54,7 +54,7 @@
 
 		
 		<!-- 평가 모임 /없을 시 row 삭제 -->
-		<c:if test="${list_score != null}">
+		<c:if test="${list_score.list[0] != null}">
 		<div class="row">
 		
 			<div class="col-lg-12">
@@ -104,7 +104,7 @@
 			<!-- 평가 리스트 끝 -->		
 		
 		<!-- 만든 모임 /없을 시 row 삭제 -->
-		<c:if test="${list_create != null}">
+		<c:if test="${list_create.list[0] != null}">
 		<div class="row">
 		
 			<div class="col-lg-12">
@@ -153,7 +153,7 @@
 		</c:if>
 		
 		<!-- 참여 모임 /없을 시 row 삭제 -->
-		<c:if test="${list_join != null}">
+		<c:if test="${list_join.list[0] != null}">
 		<div class="row">
 		
 			<div class="col-lg-12">

@@ -16,10 +16,16 @@
 			where 1 =1
 			<if test="list != null and list.size() > 0">
 				and member_id in
-			<foreach collection="list" item="item" separator="," open="(" close=")">
-				#{item}
-			</foreach>
+				<foreach collection="list" item="item" separator="," open="(" close=")">
+					#{item}
+				</foreach>
 			</if>
+	</select>
+	
+	<!-- 모임정보 가져오기 -->
+	<select id="score_selectByparty_id" parameterType="int" resultType="vo">
+		select p.* from tb_party p
+			where p.party_id = #{party_id}
 	</select>
 	
 	<!-- 평가횟수 가져오기 -->

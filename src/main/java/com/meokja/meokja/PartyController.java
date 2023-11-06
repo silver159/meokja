@@ -244,23 +244,23 @@ public class PartyController {
 		
 		logger.info("PartyController의 mylist()");
 		user = (MemberVO) session.getAttribute("user");
-		logger.info("line251 {}", user);
+		logger.info("line247 {}", user);
 		
 		// 생성한 모임 리스트
 		PartyList list_create = new PartyList();
 		list_create.setList(partyService.create_myList(user));
-		logger.info("line255 {}", list_create);
+		logger.info("line252 {}", list_create);
 		
 		// 참여한 모임 리스트
 		PartyList list_join = new PartyList();
 		list_join.setList(partyService.join_myList(user));
-		logger.info("line260 {}", list_join);
+		logger.info("line257 {}", list_join);
 		
-		// 평가할 모임 리스트(작업중)
+		// 평가할 모임 리스트
 		PartyList list_score = new PartyList();
 		list_score.setList(partyService.score_myList(user));
 		
-		logger.info("line260 {}", list_score);
+		logger.info("line263 {}", list_score);
 		
 		// 생성한 모임 리스트
 		model.addAttribute("list_create", list_create);

@@ -30,11 +30,11 @@ public interface PartyDAO {
 	
 	PartyVO selectByParty_id(int party_id);
 	
+	PartyVO score_selectByparty_id(int party_id);
+	
 	void insert(PartyVO partyVO);
 	
 	void partyUpdate(PartyVO partyVO);
 	
 	void partyDelete(PartyVO partyVO);
-
-	PartyVO score_selectByparty_id(int party_id);
 }
