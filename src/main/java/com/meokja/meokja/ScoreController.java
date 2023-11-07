@@ -51,8 +51,9 @@ public class ScoreController {
 	private PartyService partyService;
 	
 	@RequestMapping(value = "/scorePage", method = RequestMethod.POST)
-	public String score(HttpServletRequest request, Model model, PartyVO partyVO, HttpSession session) {
-		logger.info("ScoreController의 score()");
+	public String scorePage(HttpServletRequest request, Model model, PartyVO partyVO, HttpSession session) {
+		
+		logger.info("ScoreController의 scorePage()");
 		
 		user = (MemberVO) session.getAttribute("user");
 		
@@ -92,7 +93,7 @@ public class ScoreController {
 	@RequestMapping(value = "/score", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> score(Model model, @RequestBody HashMap<String, Object> data) {
-		System.out.println("ScoreController의 score");
+		logger.info("ScoreController의 score()");
 		logger.info("94line {}", data);
 		
 		List<String> member_idList = (List<String>) data.get("member_id");
@@ -112,6 +113,29 @@ public class ScoreController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("result", "success");
 		map.put("message", "평가 완료");
+		return map;
+	}
+	
+	@RequestMapping(value = "/myScore", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> myScore(Model model, @RequestBody String member_id) {
+		
+		logger.info("ScoreController의 myScore()");
+		logger.info("124line {}", member_id);
+		
+		double avg = scoreService.avgScore(member_id);
+		logger.info("127line {}", avg);
+		
+		double prime = avg - Math.floor(avg);
+		logger.info("131line {}", prime);
+		
+		double myScore = Math.floor(avg) + (prime <= 0.5 ?  0 : 0.5);
+		logger.info("135line {}", myScore);
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("result", "success");
+		map.put("myScore", Double.toString(myScore));
+		
 		return map;
 	}
 }

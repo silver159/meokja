@@ -19,4 +19,6 @@ public interface ScoreDAO {
 	int scoreCount(String member_id);
 	
 	int totalScore(String member_id);
+
+	double avgScore(String member_id);
 }

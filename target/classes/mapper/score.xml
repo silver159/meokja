@@ -39,8 +39,13 @@
 		SELECT SUM(s.score) FROM tb_score s
 		    WHERE s.member_id = #{member_id}
 	</select>
+	<select id="avgScore" parameterType="String" resultType="double">
+		SELECT AVG(s.score) FROM tb_score s
+		    WHERE s.member_id = #{member_id}
+	</select>
 	
-	<!-- insert -->
+	
+	<!-- 평가점수 입력 -->
 	<insert id="scoreInsert" parameterType="so">
 		insert into tb_score (score_id, party_id, member_id, score) 
 			values (score_id_seq.nextval, #{party_id}, #{member_id}, #{score})

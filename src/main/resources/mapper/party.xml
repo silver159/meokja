@@ -63,7 +63,7 @@
 	    </where>
 	</select>
 	
-	<!-- 검색어 있는 1페이지 분량의 메인글 (수정완료) -->
+	<!-- 검색어 있는 1페이지 분량의 메인글 -->
 	<select id="selectListMulti" parameterType="param" resultType="vo">
 	    SELECT * from (
 	        SELECT ROWNUM rnum, TT.* FROM (

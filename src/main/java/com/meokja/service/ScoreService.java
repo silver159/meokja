@@ -45,5 +45,12 @@ public class ScoreService {
 		ScoreDAO mapper = sqlSession.getMapper(ScoreDAO.class);	
 		mapper.scoreInsert(scoreVO);
 	}
+
+	public double avgScore(String member_id) {
+		
+		logger.info("ScoreService의 avgScore()");
+		ScoreDAO mapper = sqlSession.getMapper(ScoreDAO.class);	
+		return mapper.avgScore(member_id);
+	}
 	
 }
