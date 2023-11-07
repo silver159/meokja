@@ -6,8 +6,8 @@
 
 	<!-- 회원정보 저장 -->
 	<insert id="memberInsert" parameterType="mo">
-	insert into tb_member (member_id, pw, name, nickname, gender, jumin, phone, age, email, photo) 
-    	values (#{member_id}, #{pw}, #{name}, #{nickname}, #{gender}, #{jumin}, #{phone}, #{age}, #{email}, #{photo})
+	insert into tb_member (member_id, pw, name, nickname, gender, jumin, phone, age, email, photo, postCode, address, detailAddress) 
+    	values (#{member_id}, #{pw}, #{name}, #{nickname}, #{gender}, #{jumin}, #{phone}, #{age}, #{email}, #{photo}, #{postCode}, #{address}, #{detailAddress} )
 	</insert>
 	
 <!-- update -->
@@ -15,6 +15,7 @@
 	<update id="passwordChange" parameterType="mo">
 		update tb_member set password = #{password} where member_id = #{member_id}
 	</update>
+	
 	<!-- 개인정보 수정 -->
 	<update id="myProfileUpdate" parameterType="mo">
 		UPDATE tb_member SET
@@ -25,6 +26,7 @@
 			<if test="address != null and !address.isEmpty()">
 				, address = #{address}
 				, postCode = #{postCode}
+				, detailAddress = #{detailAddress}
 			</if>
 			WHERE member_id = #{member_id}
 	</update>
@@ -61,6 +63,17 @@
 	<select id="memberList" parameterType="String" resultType="mo">
    		select * from tb_member where member_id = #{member_id}
 	</select>
+	
+	<!--  -->	
+	<select id="joinMemberList" parameterType="jo" resultType="mo">
+   		select m.* from tb_join j
+   			join tb_member m
+   				on m.member_id = j.member_id
+   			where j.party_id = #{party_id}
+   				and not m.member_id = #{member_id}
+	</select>
+	
+	
 	
 </mapper>
 

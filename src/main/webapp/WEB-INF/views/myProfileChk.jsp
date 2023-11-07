@@ -29,7 +29,6 @@
 </head>
 
 <body>
-mo : ${user}
 <section class="section-padding">
 	<div class="container">
 		<div class="row justify-content-center">

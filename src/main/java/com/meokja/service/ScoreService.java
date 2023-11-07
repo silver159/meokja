@@ -52,5 +52,12 @@ public class ScoreService {
 		ScoreDAO mapper = sqlSession.getMapper(ScoreDAO.class);	
 		return mapper.avgScore(member_id);
 	}
+
+	public PartyVO score_selectByparty_id(int party_id) {
+
+		logger.info("ScoreService의 score_selectByparty_id()");
+		ScoreDAO mapper = sqlSession.getMapper(ScoreDAO.class);
+		return mapper.score_selectByparty_id(party_id);
+	}
 	
 }

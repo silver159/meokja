@@ -40,7 +40,7 @@
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="col-lg-12">
 					<h3 class="mb-4 text-center">내 정보</h3>
-<!-- form 시작 -->				
+					<!-- form 시작 -->				
 					<form class="bg-grey" action="myProfileOK" method="post" enctype="multipart/form-data" onsubmit="return formCheck()"
 						style="padding: 10px 150px;">
 						<!-- 프로필 사진 -->
@@ -124,13 +124,13 @@
 							<div class="address_box" hidden>
 								우편번호
 								<div class="d-flex justify-content-between">
-									<input type="text" class="form-control mr-3" id="postcode" placeholder="우편번호" readonly="readonly">
+									<input type="text" class="form-control mr-3" id="postcode" name="postCode" placeholder="우편번호" readonly="readonly">
 									<input type="button" class="btn btn-success ml-3" onclick="execDaumPostcode()" value="주소 찾기">
 								</div>
 								주소
-								<input type="text" class="form-control" id="address" placeholder="주소" readonly="readonly">
+								<input type="text" class="form-control" id="address" placeholder="주소" name="address" readonly="readonly">
 								상세주소
-								<input type="text" class="form-control" id="detailAddress" placeholder="상세주소">
+								<input type="text" class="form-control" id="detailAddress" name="detailAddress" placeholder="상세주소">
 								<div class="text-center">
 										<span class="btn-group">
 										<input class="btn btn-primary address_swicth" type="button" value="주소 변경"/>
@@ -166,9 +166,6 @@
 						</div>
 							<input type="hidden" name="email"/>
 							<input type="hidden" name="phone"/>
-							<input type="text" name="address"/>
-							<input type="text" name="postCode"/>
-							
 					</form>
 				</div>
 			</div>

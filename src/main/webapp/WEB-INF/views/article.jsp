@@ -148,8 +148,7 @@
 													</div>
 												</div>
 											</div>
-											<c:if
-												test="${master.member_id != user.member_id && isReport == 'N'}">
+											<c:if test="${master.member_id != user.member_id && isReport == 'N'}">
 												<div class="col-lg-12 text-right">
 													<!-- 즐겨찾기 -->
 													<c:if test="${bookmarkChk == true && master.member_id != user.member_id}">

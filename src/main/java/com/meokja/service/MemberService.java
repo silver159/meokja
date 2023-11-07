@@ -1,5 +1,7 @@
 package com.meokja.service;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.meokja.dao.MemberDAO;
+import com.meokja.vo.JoinVO;
 import com.meokja.vo.MemberVO;
 
 @Service
@@ -67,5 +70,12 @@ public class MemberService {
 		
 		MemberDAO mapper = sqlSession.getMapper(MemberDAO.class);
 		return mapper.selectById(member_id);
+	}
+
+	public ArrayList<MemberVO> joinMemberList(JoinVO joinVO) {
+
+		logger.info("MemberService의 joinMemberList()");
+		MemberDAO mapper = sqlSession.getMapper(MemberDAO.class);
+		return mapper.joinMemberList(joinVO);
 	}
 }

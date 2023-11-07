@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>         <!-- jstl c -->
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>      <!-- jstl fmt -->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>        <!-- jstl fmt -->
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>   <!-- jstl fn -->
 <!DOCTYPE html>
 <html>
@@ -61,8 +61,7 @@
 						<!-- 아이디 -->
 						<div class="col-lg-12">
 							아이디
-							<input id="member_id" class="form-control" type="text" name="member_id"
-                     			placeholder="아이디" autocomplete="off" onkeyup="idCheck()"/>
+							<input id="member_id" class="form-control" type="text" name="member_id" placeholder="아이디" autocomplete="off" onkeyup="idCheck()"/>
                      		<!-- 아이디 오류 문구 출력 -->
 							<h5 id="idChkMessage1" style="color: red; font-weight: bold"></h5>
 							<h5 id="idChkMessage2" style="color: blue; font-weight: bold"></h5>
@@ -70,45 +69,40 @@
 						<!-- 비밀번호 -->
 						<div class="col-lg-12">
 							비밀번호
-							<input id="pw" class="form-control" type="password" name="pw"
-								placeholder="비밀번호" autocomplete="off" onkeyup="pwdCheck1()"/>
+							<input id="pw" class="form-control" type="password" name="pw" placeholder="비밀번호" autocomplete="off" onkeyup="pwdCheck1()"/>
 							 <!-- 비밀번호 오류 문구 출력 -->
                   			<h5 id="pwdChkMessage1" style="color: red; font-weight: bold"></h5>
 						</div>
 						<!-- 비밀번호 확인 -->
 						<div class="col-lg-12">
 							비밀번호 확인
-							<input id="pw2" class="form-control" type="password" name="password2" value="123456a!"
-								placeholder="비밀번호 확인" autocomplete="off" onkeyup="pwdCheck2()"/>
+							<input id="pw2" class="form-control" type="password" name="password2" placeholder="비밀번호 확인" autocomplete="off" onkeyup="pwdCheck2()"/>
 							<h5 id="pwdChkMessage2" style="color: red; font-weight: bold"></h5>
 						</div>
 						<!-- 이름 -->
 						<div class="col-lg-12">
 							이름
-							<input id="name" class="form-control" type="text" name="name" value="고대일"
-	                     		placeholder="이름" autocomplete="off"/>
+							<input id="name" class="form-control" type="text" name="name" placeholder="이름" autocomplete="off"/>
 						</div>
 						<!-- 닉넥임 -->
 						<div class="col-lg-12">
 							닉네임
-							<input id="nickname" class="form-control" type="text" name="nickname" value="무우명"
-								placeholder="닉네임" autocomplete="off"/>
+							<input id="nickname" class="form-control" type="text" name="nickname" placeholder="닉네임" autocomplete="off"/>
 						</div>
 						<!-- 주민번호 -->
 						<div class="col-lg-12">
 							주민번호
 							<div class="d-flex">
-								<input type="text" class="form-control" name="jumin1" maxlength="6"  placeholder="주민번호 앞자리" value="950504"/>
+								<input type="text" class="form-control" name="jumin1" maxlength="6"  placeholder="주민번호 앞자리"/>
 								<b style="margin: 10px 15px;">-</b>
-								<input type="password" class="form-control" name="jumin2" maxlength="7"  placeholder="뒷자리" value="1057834"/>
+								<input type="password" class="form-control" name="jumin2" maxlength="7"  placeholder="뒷자리"/>
 							</div>
 						</div>
 						<!-- 이메일 -->
 						<div class="col-lg-12">
 							이메일
 							<div class="d-flex">
-								<input type="text" name="email1" class="form-control" value="shjy177"
-									autocomplete="off" placeholder="이메일"/>
+								<input type="text" name="email1" class="form-control" autocomplete="off" placeholder="이메일"/>
 								<b style="margin: 10px;">@</b>
 								<select class="form-control" style="margin: 0 0 14px 0;" onchange="selectEmail()">
 				                	<option>gmail.com</option>
@@ -133,8 +127,7 @@
 									<option>019</option>
 								</select>
 								<b style="margin: 10px 15px;">-</b>
-								<input id="phone" class="form-control" type="text" value="63415131"
-									placeholder="휴대폰 번호('-'없이 입력하세요)" maxlength="8" autocomplete="off"/>
+								<input id="phone" class="form-control" type="text" placeholder="휴대폰 번호('-'없이 입력하세요)" maxlength="8" autocomplete="off"/>
 							</div>
 						</div>
 						
@@ -146,9 +139,9 @@
 								<input type="button" class="btn btn-success ml-4" onclick="execDaumPostcode()" value="주소 찾기"><br>
 							</div>
 							주소
-							<input type="text" class="form-control" id="address" placeholder="주소" readonly="readonly">
+							<input type="text" class="form-control" id="address" name="address" placeholder="주소" readonly="readonly">
 							상세주소
-							<input type="text" class="form-control" id="detailAddress" placeholder="상세주소">
+							<input type="text" class="form-control" id="detailAddress" name="detailAddress" placeholder="상세주소">
 						</div>
 						<div class="col-lg-12 text-center p-3">
 							<input class="btn btn-primary" type="submit" value="가입완료" style="width: 200px;">
@@ -159,7 +152,6 @@
 							<input type="hidden" name="phone"/>
 							<input type="hidden" name="gender"/>
 							<input type="hidden" name="age"/>
-							<input type="text" name="address"/>
 						</div>
 					</form>
 <!-- form 끝 -->

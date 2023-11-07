@@ -1,5 +1,8 @@
 package com.meokja.dao;
 
+import java.util.ArrayList;
+
+import com.meokja.vo.JoinVO;
 import com.meokja.vo.MemberVO;
 
 public interface MemberDAO {
@@ -15,5 +18,7 @@ public interface MemberDAO {
 	MemberVO pwSerch(MemberVO memberVO);
 
 	void myProfileUpdate(MemberVO memberVO);
+
+	ArrayList<MemberVO> joinMemberList(JoinVO joinVO);
 
 }

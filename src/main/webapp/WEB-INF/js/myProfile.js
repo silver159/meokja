@@ -64,12 +64,12 @@ function formCheck() {
    let email2 = $('input[name=email2]').val().trim();
    let phone1 = $('select').eq(1).val();
    let phone2 = $('#phone').val().trim();
+   let postCode = $('#postcode').val().trim();
    let address = $('#address').val().trim();
    let detailAddress = $('#detailAddress').val().trim();
    let email = email1 + '@' + email2;
    let phone = phone1 + phone2;
    
-   $('input[name=postCode]').val(email);
    $('input[name=email]').val(email);
    $('input[name=phone]').val(phone);
    

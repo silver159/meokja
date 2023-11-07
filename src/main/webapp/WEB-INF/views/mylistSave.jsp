@@ -223,11 +223,11 @@
 								<h4 class="mb-0 mt-4">내 평점</h4>
 								<div class="star-container">
 									<!-- far: 빈별 fas 채운별 -->
-									<i class="star "></i> 
-									<i class="star "></i> 
-									<i class="star "></i>
-									<i class="star "></i>
-									<i class="star "></i>
+									<i class="star bi bi-star-fill"></i> 
+									<i class="star bi bi-star-half"></i> 
+									<i class="star bi bi-star"></i>
+									<i class="star bi bi-star"></i> 
+									<i class="star bi bi-star"></i>
 								</div>
 							</div>
 						</div>
@@ -252,17 +252,16 @@
 	const member_id = '${user.member_id}';
 	console.log(member_id);
 	
-	const url = '/meokjang/myScore';
+	const url = '/meokja/myScore';
 	
 	fetch(url, {
 		method: "POST",
 		headers: {
 			"Content-Type": "text/plain",
 		},
-		body: member_id
+		body: member_id,
 	})
 	.then(response => {
-		console.log('gd');
 		return response.json();
 	})
 	.then(json => {
