@@ -68,6 +68,16 @@ public class LoginController {
         String pwSearchMessage = loginService.pwSearch(memberVO);
         
         printScriptMessage(response, pwSearchMessage);
+    }
+    
+    // 비밀번호 찾기
+    @RequestMapping("/pwdChange")
+    public void pwdChange(HttpServletResponse response, MemberVO memberVO) throws IOException {
+    	logger.info("LoginController의 pwdChange()");
+    	logger.info("{}", memberVO);
+    	// loginService를 통해 비밀번호 변경
+    	String pwdChangeMessage = loginService.pwdChange(memberVO);
+    	printScriptMessage(response, pwdChangeMessage);
     }    
     
     // 공통 메소드

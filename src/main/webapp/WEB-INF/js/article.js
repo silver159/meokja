@@ -49,11 +49,8 @@ $(() => {
 	$('#report_btn').click((context) => {
 		
 		var is = confirm('신고하시겠습니까?');
-		
 		if(is) {
-			var target = $(context.currentTarget);
-			
-			var formElm = target.closest("form");
+			var formElm =  $('#switch_form');
 			
 			formElm.attr('action', 'reportInsert');
 			formElm.removeAttr('onsubmit');

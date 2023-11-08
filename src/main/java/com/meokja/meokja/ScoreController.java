@@ -53,9 +53,6 @@ public class ScoreController {
 	private ScoreService scoreService;
 	
 	@Autowired
-	private PartyService partyService;
-	
-	@Autowired
 	private MemberService memberService;
 	
 	@RequestMapping(value = "/scorePage", method = RequestMethod.POST)
@@ -66,20 +63,25 @@ public class ScoreController {
     	partyVO = scoreService.score_selectByparty_id(partyVO.getParty_id());
       
     	user = (MemberVO) session.getAttribute("user");
-      
+    	
     	joinVO.setParty_id(partyVO.getParty_id());
     	joinVO.setMember_id(user.getMember_id());
       
     	// 모임원 정보
     	ArrayList<MemberVO> joinMember = memberService.joinMemberList(joinVO);
-
+    	
     	// 모임장 정보
 	    MemberVO master = memberService.selectById(partyVO.getMember_id());
-	      
+	    
+	    if(! user.getMember_id().equals(master.getMember_id())) {
+	    	joinMember.add(master);
+	    }
+	    
 	    // 모임원 정보와 모임장 정보를 합친 후 memberList에 담고 브라우저에 데이터를 넘긴다.  
-	    joinMember.add(master);
 	    memberList.setList(joinMember);
-	      
+	    
+	    logger.info("scorePage의 memberList {}", memberList);
+	    
 	    // 파티정보
 	    model.addAttribute("vo", partyVO);
 	    // 평가할 회원정보
@@ -101,9 +103,10 @@ public class ScoreController {
 		logger.info("100line {}", party_id);
 		logger.info("101line {}", member_idList);
 		logger.info("102line {}", scoreList.get(0));
+		
 		for(int i = 0; i < scoreList.size(); i++) {
-			scoreVO.setMember_id(member_idList.get(0));
-			scoreVO.setScore(scoreList.get(0));
+			scoreVO.setMember_id(member_idList.get(i));
+			scoreVO.setScore(scoreList.get(i));
 			scoreVO.setParty_id(party_id);
 			scoreService.scoreInsert(scoreVO);
 		}
@@ -118,7 +121,6 @@ public class ScoreController {
 	@ResponseBody
 	public Map<String, String> myScore(Model model, @RequestBody String member_id) {
 		logger.info("ScoreController의 myScore()");
-
 		
 		double avg = scoreService.avgScore(member_id);
 		logger.info("127line {}", avg);

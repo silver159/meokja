@@ -27,6 +27,22 @@
 <script type="text/javascript" src="js/article.js" defer="defer"></script>
 <script type="text/javascript" src="js/daumlocationListAPI.js" defer="defer"></script>
 <link rel="stylesheet" href="css/daumapi.css">
+<script type="text/javascript" src="js/mylist.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+
+<style type="text/css">
+	#score_box {
+		cursor: pointer;
+	}
+	
+	.star {
+		cursor: pointer;
+		color: #dabd18b2;
+		font-size: 25px;
+	}
+</style>
+
 <script type="text/javascript">
 	function bookmark(link) {
 		var party_id = link.getAttribute("data-partyid");
@@ -183,12 +199,19 @@
 							<form id="switch_form" action="joinInsert" method="post" onsubmit="location.href = 'list'">
 								<!-- 참여 하기 -->
 
-								<c:if test="${master.member_id != user.member_id}">
+								<c:if test="${master.member_id != user.member_id && isReport == 'N'}">
 									<div id="join_box">
 										<h4 class="text-center widget-title" style="margin-top: 8px;">참여하기</h4>
 										<textarea class="form-control mb-3 bg-white" name="contents" rows="3" placeholder="파티장에게 메세지를 보내세요." style="resize: none;"></textarea>
 										<div class="text-center">
 											<input type="submit" class="btn btn-primary" value="참여 신청" />
+											<input class="btn btn-primary" type="button" value="돌아가기" onclick="location.href = 'list?currentPage=${currentPage}'" />
+										</div>
+									</div>
+								</c:if>
+								<c:if test="${master.member_id != user.member_id && isReport == 'Y'}">
+									<div id="join_box">
+										<div class="text-center">
 											<input class="btn btn-primary" type="button" value="돌아가기" onclick="location.href = 'list?currentPage=${currentPage}'" />
 										</div>
 									</div>
@@ -213,8 +236,17 @@
 									<!-- 수정필요 -->
 									<img src="upload/memberphoto/${master.photo}" class="img-fluid">
 								</div>
+								
 								<h4 class="mb-0 mt-4">모임장</h4>
 								<p>${master.member_id}</p>
+								<div class="star-container">
+									<!-- far: 빈별 fas 채운별 -->
+									<i class="star "></i> 
+									<i class="star "></i> 
+									<i class="star "></i>
+									<i class="star "></i>
+									<i class="star "></i>
+								</div>
 							</div>
 
 							<!-- fix 개수 -->
@@ -288,12 +320,56 @@
 			</div>
 		</div>
 	</section>
+	
 	<script type="text/javascript">
-	$(() => {
-		searchPlaces();
-	});
+		$(() => {
+			searchPlaces();
+		});
+		</script>
+		<script type="text/javascript">
+	
+		//평점 찍기
+		const halfStar_class = "star bi bi-star-half";
+		const fullStar_class = "star bi bi-star-fill";
+		const target = $('.star-container');
+		
+		const stars = [...target.children()];
+		
+		console.log(stars);
+	
+		const member_id = '${user.member_id}';
+		console.log(member_id);
+		
+		const url = '/meokjang/myScore';
+		
+		fetch(url, {
+			method: "POST",
+			headers: {
+				"Content-Type": "text/plain",
+			},
+			body: member_id
+		})
+		.then(response => {
+			console.log('gd');
+			return response.json();
+		})
+		.then(json => {
+			console.log(json);
+			if(json.result == "success") {
+				
+				const myScore = json.myScore;
+				
+				for(var i = 0; i < Math.floor(myScore); i++) {
+					stars[i].className = fullStar_class;
+				}
+				if(Math.floor(myScore) != myScore){
+					stars[Math.floor(myScore)].className = halfStar_class;
+				}
+			}
+		})
 	</script>
-
+	
+	
 	<!-- footer -->
 	<jsp:include page="common/footer.jsp"></jsp:include>
 

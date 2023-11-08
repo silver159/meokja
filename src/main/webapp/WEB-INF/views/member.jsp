@@ -40,7 +40,7 @@
 				<div class="col-lg-12">
 					<h3 class="mb-4 text-center">회원가입</h3>
 <!-- form 시작 -->
-					<form class="bg-grey" method="post" action="member" enctype="multipart/form-data" onsubmit="return formCheck(); return false;"
+					<form class="bg-grey" method="post" action="member" enctype="multipart/form-data" onsubmit="return formCheck()"
 						style="padding: 10px 150px;">
 						<!-- 프로필 사진 -->
 						<div class="col-lg-12">
@@ -135,7 +135,7 @@
 						<div class="col-lg-12">
 							우편번호
 							<div class="d-flex justify-content-between">
-								<input type="text" class="form-control mr-4" id="postcode" name="postcode" placeholder="우편번호" readonly="readonly">
+								<input type="text" class="form-control mr-4" id="postcode" name="postCode" placeholder="우편번호" readonly="readonly">
 								<input type="button" class="btn btn-success ml-4" onclick="execDaumPostcode()" value="주소 찾기"><br>
 							</div>
 							주소

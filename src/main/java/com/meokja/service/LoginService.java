@@ -105,6 +105,17 @@ public class LoginService {
         // 비밀번호 찾기 결과에 따른 메시지 반환
         return pwSearchMessage; 
     }
+
+	public String pwdChange(MemberVO memberVO) {
+		
+		logger.info("loginService의 pwSearch()");
+        
+        MemberDAO mapper = sqlSession.getMapper(MemberDAO.class);
+        mapper.pwdChange(memberVO);
+        String pwdChangeMessage =  "alert('비밀번호가 변경되었습니다.');\n";
+        pwdChangeMessage += "location.href='loginPage';";
+		return pwdChangeMessage;
+	}
 	
 }
 

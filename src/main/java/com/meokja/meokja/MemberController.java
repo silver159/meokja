@@ -86,6 +86,7 @@ public class MemberController {
 	    
 	    // 사진 이름 저장
 	    memberVO.setPhoto(photo);
+	    
 	    String memberInsertMessage = memberService.memberInsert(memberVO);
 		
         printScriptMessage(response, memberInsertMessage);

@@ -41,6 +41,7 @@ public class ScoreService {
 	public void scoreInsert(ScoreVO scoreVO) {
 		
 		logger.info("ScoreService의 scoreInsert()");
+		logger.info("ScoreService의 scoreVO {}", scoreVO);
 		
 		ScoreDAO mapper = sqlSession.getMapper(ScoreDAO.class);	
 		mapper.scoreInsert(scoreVO);

@@ -38,8 +38,6 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<input type="password" placeholder="현재 비밀번호" name="passwordChk" class="form-control mb-3"/><br/>
-							<input type="text" name="originPassword" value="${user.pw}"><br/>
-							<input type="text" name="id" value="${user.member_id}">
 						</div>
 					</div>
 					<input type="hidden" name="jumin">

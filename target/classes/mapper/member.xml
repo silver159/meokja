@@ -12,8 +12,8 @@
 	
 <!-- update -->
 
-	<update id="passwordChange" parameterType="mo">
-		update tb_member set password = #{password} where member_id = #{member_id}
+	<update id="pwdChange" parameterType="mo">
+		update tb_member set pw = #{pw} where member_id = #{member_id}
 	</update>
 	
 	<!-- 개인정보 수정 -->

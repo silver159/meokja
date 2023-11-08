@@ -7,7 +7,7 @@
 	    select j.member_id from tb_party p
 	        join tb_join j
 	            on p.party_id = j.party_id
-	        where p.party_id = #{party_id}
+	        where p.party_id = #{party_id} and j.status = '수락'
 	</select>
 	
 	<!-- 평가할 모임원 정보 리스트 -->
@@ -48,7 +48,7 @@
 	<!-- 평가점수 입력 -->
 	<insert id="scoreInsert" parameterType="so">
 		insert into tb_score (score_id, party_id, member_id, score) 
-			values (score_id_seq.nextval, #{party_id}, #{member_id}, #{score})
+			values (TB_SCORE_idx_seq.nextval, #{party_id}, #{member_id}, #{score})
 	</insert>
 	
 </mapper>

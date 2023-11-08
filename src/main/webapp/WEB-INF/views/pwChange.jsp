@@ -36,13 +36,14 @@
 					<h1 class="mb-4" style="vertical-align: middle; text-align: center; font-size: 25px;">내 정보 확인</h1>
 					<div class="row">
 						<div class="col-lg-12">
-							<input type="password" placeholder="변경할 비밀번호" name="password" class="form-control mb-3"/><br/>
-							<input type="password" placeholder="비밀번호 확인" name="password2" class="form-control mb-3"/><br/>
-							<input type="hidden" name="originPassword" value="${mo.password}"><br/>
-							<input type="hidden" name="ID" value="${mo.id}">
+							<input id="pw" type="password" placeholder="변경할 비밀번호" name="pw" class="form-control mb-3" onkeyup="pwdCheck1()"/>
+							<h5 id="pwdChkMessage1" style="color: red; font-weight: bold"></h5>
+							<input id="pw2" type="password" placeholder="비밀번호 확인" name="pw2" class="form-control mb-3" onkeyup="pwdCheck2()"/>
+							<h5 id="pwdChkMessage2" style="color: red; font-weight: bold"></h5>
+							<input type="hidden" name="originPw" value="${user.pw}"><br/>
+							<input type="hidden" name="member_id" value="${user.member_id}">
 						</div>
 					</div>
-					<input type="hidden" name="jumin">
 					<div class="d-grid">
 						<input class="btn btn-primary btn-block mb-3" type="submit" value="비밀번호 변경"/>
 						<input class="btn btn-primary btn-block mb-3" type="button" value="돌아가기" onclick="history.back()"/>

@@ -34,7 +34,9 @@ public class ReportService {
 		ReportDAO mapper = sqlSession.getMapper(ReportDAO.class);
 		mapper.reportInsert(reportVO);
 		String reportMessage = "alert('신고 완료!!!');\n";
-		reportMessage += "location.href='selectByIdx?party_id="+reportVO.getParty_id()+"&currentPage="+currentPage+"&job=article'';";
+		logger.info("{}", reportVO.getParty_id());
+		logger.info("{}", currentPage);
+		reportMessage += "location.href='list';";
 		return reportMessage;
 	}
 

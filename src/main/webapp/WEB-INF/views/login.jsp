@@ -61,7 +61,7 @@
 					</div>
 					<div>
 						<label for="idSave">아이디 저장 &nbsp;</label>
-						<input id="idSave" type="checkbox" name="idSave" checked="checked" /><br/>
+						<input id="idSave" type="checkbox" name="idSave"/><br/>
 						<div class="mb-2">
 							<a href="idSerchPage">아이디 찾기</a>&nbsp;&nbsp;
 							<a href="pwSerchPage">비밀번호 찾기</a>

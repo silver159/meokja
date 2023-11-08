@@ -21,4 +21,6 @@ public interface MemberDAO {
 
 	ArrayList<MemberVO> joinMemberList(JoinVO joinVO);
 
+	void pwdChange(MemberVO memberVO);
+
 }

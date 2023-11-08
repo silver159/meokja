@@ -148,10 +148,14 @@ public class PartyController {
 			printScriptMessage(response, warnnigMessage);
 		}else {
 			
+			int currentPage = 1;
 			// 넘어오는 데이터 2가지 받기		
-			int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+			try {
+				currentPage = Integer.parseInt(request.getParameter("currentPage"));
+				logger.info("line153 {}", currentPage);
+			} catch (Exception e) {}
 			int	party_id = Integer.parseInt(request.getParameter("party_id"));
-			System.out.println(party_id);
+			logger.info("line155 {}", party_id);
 			// 메인글 1건을 얻어오는 메소드를 호출한다.	
 			partyVO = partyService.selectByParty_id(party_id);
 			
@@ -259,7 +263,6 @@ public class PartyController {
 		// 평가할 모임 리스트
 		PartyList list_score = new PartyList();
 		list_score.setList(partyService.score_myList(user));
-		
 		logger.info("line263 {}", list_score);
 		
 		// 생성한 모임 리스트

@@ -104,12 +104,11 @@
 					</div>
 				</div>
 				<!-- 본문 내용 끝-->
+				
 				<!-- 평가하기 시작 -->
 				<div class="col-lg-12 bg-grey my-5">
 					<div class="row my-3">
-
 						<!-- 리스트 수에 따른 문서 나누기 -->
-
 						<!-- 평가할 맴버 리스트 출력 -->
 						<c:forEach var="list" items="${scoreList.list}">
 							<div class="col-lg-2 col-md-3 col-sm-6 my-3">
@@ -132,9 +131,6 @@
 							<input type="hidden" class="member_id" value="${list.member_id}">
 							<div class="col-lg-2">&nbsp;</div>
 						</c:forEach>
-
-
-
 					</div>
 					<div class="row">
 						<div class="col-lg-12 text-center my-3">

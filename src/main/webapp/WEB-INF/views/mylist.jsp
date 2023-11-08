@@ -40,7 +40,6 @@
 
 </head>
 <body>
-
 	<!-- header -->
 	<jsp:include page="common/header.jsp"></jsp:include>
 
@@ -203,10 +202,8 @@
 							<!-- 참여 리스트 끝 -->
 						</div>
 					</c:if>
-
 				</div>
 				<!-- 본문 내용 끝-->
-
 
 				<!-- 왼쪽 사이드 바 -->
 				<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -237,49 +234,48 @@
 		</div>
 	</section>
 
-
-<script type="text/javascript">
-
-	//평점 찍기
-	const halfStar_class = "star bi bi-star-half";
-	const fullStar_class = "star bi bi-star-fill";
-	const target = $('.star-container');
+	<script type="text/javascript">
 	
-	const stars = [...target.children()];
+		//평점 찍기
+		const halfStar_class = "star bi bi-star-half";
+		const fullStar_class = "star bi bi-star-fill";
+		const target = $('.star-container');
+		
+		const stars = [...target.children()];
+		
+		console.log(stars);
 	
-	console.log(stars);
-
-	const member_id = '${user.member_id}';
-	console.log(member_id);
-	
-	const url = '/meokjang/myScore';
-	
-	fetch(url, {
-		method: "POST",
-		headers: {
-			"Content-Type": "text/plain",
-		},
-		body: member_id
-	})
-	.then(response => {
-		console.log('gd');
-		return response.json();
-	})
-	.then(json => {
-		console.log(json);
-		if(json.result == "success") {
-			
-			const myScore = json.myScore;
-			
-			for(var i = 0; i < Math.floor(myScore); i++) {
-				stars[i].className = fullStar_class;
+		const member_id = '${user.member_id}';
+		console.log(member_id);
+		
+		const url = '/meokjang/myScore';
+		
+		fetch(url, {
+			method: "POST",
+			headers: {
+				"Content-Type": "text/plain",
+			},
+			body: member_id
+		})
+		.then(response => {
+			console.log('gd');
+			return response.json();
+		})
+		.then(json => {
+			console.log(json);
+			if(json.result == "success") {
+				
+				const myScore = json.myScore;
+				
+				for(var i = 0; i < Math.floor(myScore); i++) {
+					stars[i].className = fullStar_class;
+				}
+				if(Math.floor(myScore) != myScore){
+					stars[Math.floor(myScore)].className = halfStar_class;
+				}
 			}
-			if(Math.floor(myScore) != myScore){
-				stars[Math.floor(myScore)].className = halfStar_class;
-			}
-		}
-	})
-</script>
+		})
+	</script>
 
 	<!-- footer -->
 	<jsp:include page="common/footer.jsp"></jsp:include>
