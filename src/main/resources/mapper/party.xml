@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.meokja.dao.PartyDAO">
-	
+
+<!-- insert -->	
 	<!-- 메인글 저장 -->
 	<insert id="insert" parameterType="vo">
 		insert into tb_party (party_id, member_id, food_category, local_category, subject, contents, map, mealed_at, thumbnail, limitNum, status) 
 		values (TB_PARTY_idx_seq.nextval, #{member_id}, #{food_category}, #{local_category}, #{subject}, #{contents}, #{map}, #{mealed_at}, #{thumbnail}, #{limitNum}, '일반')
 	</insert>
 	
+<!-- select -->
 	<!-- 전체 메인글 개수 -->
 	<select id="selectCount" resultType="int">
 		SELECT count(*) from tb_party where status = '일반' and mealed_at > SYSDATE
@@ -40,7 +42,7 @@
 		
 	</select>
 	
-	<!--  -->
+	<!-- 검색어 있는 1페이지 분량의 메인글의 개수 -->
 	<select id="selectCountMulti" parameterType="param" resultType="int">
 	    SELECT count(*) from tb_party
 	    <where>
@@ -114,16 +116,16 @@
 	
 	<!-- 평가해야할 모임 리스트 -->
 	<select id="score_myList" parameterType="mo" resultType="vo">
-			SELECT DISTINCT tt.* FROM tb_score s
+			SELECT tt.* FROM tb_score s
 			    RIGHT JOIN (
-			        SELECT p.* FROM tb_party p
-			            LEFT JOIN tb_join j
+			        SELECT p.* 
+			        	FROM tb_party p LEFT JOIN tb_join j
 			                ON p.party_id = j.party_id
 			            WHERE j.member_id = #{member_id} OR p.member_id = #{member_id}
 			    ) tt
 			    ON (s.party_id = tt.party_id)
 			    WHERE sysdate BETWEEN tt.mealed_at + INTERVAL '1' HOUR AND tt.mealed_at + 7
-			    AND s.score_id IS NULL
+			    	AND s.score_id IS NULL
 	</select>
 	
 	<!-- 글 1개의 정보 (article) -->
@@ -137,12 +139,13 @@
 
 	<!-- 글 1개의 정보 -->
 	<select id="score_party_id" parameterType="int" resultType="vo">
-		SELECT * FROM tb_party p
-		    join tb_join j
+		SELECT * 
+			FROM tb_party p join tb_join j
 		        on p.party_id = j.party_id
 		    WHERE p.party_id = #{party_id}
 	</select>
 	
+	<!-- Slider 목록 -->
 	<select id="selectSlider" resultType="vo">
 		SELECT * FROM (
 			SELECT * FROM tb_party
@@ -157,6 +160,7 @@
 			where party_id = #{party_id}
 	</select>
 	
+<!-- update -->	
 	<!-- 파티 수정 -->
 	<update id="partyUpdate" parameterType="vo">
 		update tb_party set subject = #{subject} , contents = #{contents} where party_id = #{party_id}

@@ -3,7 +3,6 @@
 <mapper namespace="com.meokja.dao.JoinDAO">
 
 <!-- select -->
-
    	<!-- (모임에 참여한 모든 참여자) -->
    	<select id="selectJoinList" parameterType="int" resultType="jo">
          select * from tb_join
@@ -28,7 +27,6 @@
    	</select>
    	
 <!-- update -->
-
 	<!-- 모임참여 승인 -->
 	<update id="joinGrant" parameterType="jo">
 		UPDATE tb_join
@@ -37,7 +35,6 @@
 	</update>
 
 <!-- delete -->
-
 	<!-- 모임참여 거절 -->
 	<delete id="joinReject" parameterType="jo">
 		DELETE FROM tb_join
@@ -51,7 +48,6 @@
    </delete>
 
 <!-- insert -->
-
 	<!-- 데이터 생성 -->
 	<insert id="joinInsert" parameterType="jo">
 		insert into tb_join (join_id, party_id, member_id, contents) 

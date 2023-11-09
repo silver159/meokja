@@ -1,5 +1,4 @@
-/*==================현재 시간 찍어주는 코드 ===================*/
-
+// 현재 시간 찍어주는 코드
 $(() =>{
 	let now = new Date();
     let currentHour = now.getHours();
@@ -10,18 +9,6 @@ $(() =>{
 
     $('input[name=dateObject2]').val(`${hour}:${minute}`);
  
-    
-//    // 현재 날짜를 가져오는 함수
-//    function getCurrentDate() {
-//    	const today = new Date();
-//		const year = today.getFullYear();
-//		const month = (today.getMonth() + 1).toString().padStart(2, '0'); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅
-//		const day = today.getDate().toString().padStart(2, '0'); // 일도 두 자리로 포맷팅
-//		return `${year}-${month}-${day}`;
-//    }
-//
-//    // 현재 날짜를 기본값으로 설정
-//    document.getElementById('dateInput').value = getCurrentDate();
     console.log($('input[name=dateObject1]').val());
     
 });
@@ -35,17 +22,14 @@ $(() =>{
 	    document.getElementById("limitValue").textContent = value;
 	}
 	
-	
 	function photoView(event) {
 	   $('#output').attr('src', URL.createObjectURL(event.target.files[0]));
 	}
 	function updateValue(value) {
 	    document.getElementById("limitValue").textContent = value;
 	}
-// 파일 업로드 함수 끝
 
-/*=================날짜 제한 시작 ===========================*/
-
+// 날짜 제한
 function dateOK() {
 	let mealDate = $('input[name=dateObject1]');
 	let today = new Date();
@@ -61,10 +45,8 @@ function dateOK() {
     mealDate.attr('min', minDateString);
    
 }
-/*=================날짜 제한 끝 ===========================*/
 
-
-/*=================시간 체크 시작===========================*/
+// 시간 체크
 function timeOK() {
    let mealTime = $('input[name=dateObject2]');
    let now = new Date();
@@ -90,9 +72,8 @@ function timeOK() {
       }
    } 
 }
-/*=================시간 체크 끝===========================*/
 
-/*================입력 체크 시작 =============================*/
+// 입력 체크 시작
 function partyInsertOK (){
    
    let subject =  $('input[name=subject]').val();
@@ -105,16 +86,41 @@ function partyInsertOK (){
    let fileName = $('input[name=fileName]').val();
    let pattern = new RegExp('^[0-9]+$');
    
+   if(subject.length == 0 || subject == ''){
+	   alert('모임 이름을 입력하세요');
+	   return false;
+   }
    
    if(fileName == ''){
       alert('사진을 선택하세요');
       return false;
    }
    
-   if(subject.length == 0 || subject == ''){
-      alert('파티 이름을 입력하세요');
-      return false;
+   if(food_category == '음식 카테고리'){
+	   alert('음식 카테고리를 선택하세요');
+	   return false;
    }
+   
+   if(local_category == '전국') {
+	   alert('지역을 선택하세요');
+	   return false;
+   }
+   
+   if(limitNum.length == 0 || limitNum == '') {
+	   alert('인원을 선택하세요');
+	   return false;
+   }
+   
+   if (!pattern.test(limitNum)) {
+	   alert('인원은 숫자만 입력하세요');
+	   return false;
+   }
+   
+   if(mealed_at.length == 0 || mealed_at == '') {
+	   alert('날짜를 선택하세요');
+	   return false;
+   }
+   
    if(map.length == 0 || map == ''){
       alert('장소를 입력하세요');
       return false;
@@ -123,30 +129,6 @@ function partyInsertOK (){
    if(contents.length == 0 || contents == ''){
       alert('내용을 입력하세요');
       return false;
-   }
-   if(food_category == '음식 카테고리'){
-      alert('음식 카테고리를 선택하세요');
-      return false;
-   }
-   
-   if(local_category == '전국') {
-      alert('지역을 선택하세요');
-      return false;
-   }
-   console.log('gg');
-   
-   if(limitNum.length == 0 || limitNum == '') {
-      alert('인원을 선택하세요');
-      return false;
-   }
-   if(mealed_at.length == 0 || mealed_at == '') {
-      alert('날짜를 선택하세요');
-      return false;
-   }
-   
-   if (!pattern.test(limitNum)) {
-     alert('인원은 숫자만 입력하세요');
-     return false;
    }
    
 }

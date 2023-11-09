@@ -3,7 +3,6 @@
 <mapper namespace="com.meokja.dao.MemberDAO">
 
 <!-- insert -->
-
 	<!-- 회원정보 저장 -->
 	<insert id="memberInsert" parameterType="mo">
 	insert into tb_member (member_id, pw, name, nickname, gender, jumin, phone, age, email, photo, postCode, address, detailAddress) 
@@ -11,7 +10,7 @@
 	</insert>
 	
 <!-- update -->
-
+	<!-- 비밀번호 변경 -->
 	<update id="pwdChange" parameterType="mo">
 		update tb_member set pw = #{pw} where member_id = #{member_id}
 	</update>
@@ -34,7 +33,6 @@
 <!-- delete -->
 	
 <!-- select -->
-
 	<!-- 중복된 아이디가 있는지 DB 조회하기 ( ID중복검사 ) -->
 	<select id="IDCheck" parameterType="mo" resultType="int">
    		select count(*) from tb_member where member_id = #{member_id}
@@ -50,6 +48,7 @@
    		select member_id from tb_member where name = #{name} and jumin = #{jumin}
 	</select>
 	
+	<!-- 비밀번호 조회 -->
 	<select id="pwSerch" parameterType="mo" resultType="mo">
    		select * from tb_member where name = #{name} and jumin = #{jumin} and member_id = #{member_id}
 	</select>
@@ -64,7 +63,7 @@
    		select * from tb_member where member_id = #{member_id}
 	</select>
 	
-	<!--  -->	
+	<!-- 파티 참석 인원 조회 -->	
 	<select id="joinMemberList" parameterType="jo" resultType="mo">
    		select m.* from tb_join j
    			join tb_member m
@@ -72,9 +71,6 @@
    			where j.party_id = #{party_id}
    				and not m.member_id = #{member_id}
 	</select>
-	
-	
-	
 </mapper>
 
 

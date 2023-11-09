@@ -44,7 +44,7 @@
          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="col-lg-12">
             <form class="comment-form mb-5 bg-grey p-5" action="partyInsert" method="post" enctype="multipart/form-data" onsubmit="return partyInsertOK();">
-               <h3 class="mb-4 text-center">먹방 생성</h3>
+               <h3 class="mb-4 text-center">모임 생성</h3>
                <div class="row">
                   <!-- 파티 명 -->
                   <div class="col-lg-12">
@@ -134,7 +134,7 @@
                         </div>
                         <div class="col-lg-4 text-center">
                            <div>
-                              <input type="button" class="btn btn-warning" id="searchButton" value="검색" onclick="searchPlaces(); return false;"/>
+                              <input type="button" class="btn btn-warning" id="searchButton" value="검색" onclick="searchPlaces()"/>
                            </div>
                         </div>
                      </div>
@@ -144,7 +144,7 @@
 					<div class="col-lg-2"></div>
 					<div class="col-lg-8">
 						<div class="map_wrap">
-							<div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+							<div id="map" style="width:100%; height:100%; position:relative; overflow:hidden;"></div>
 							<div id="menu_wrap" class="bg_white">
 								<div class="option">
 									<div></div>
@@ -169,7 +169,6 @@
                         <input class="btn btn-primary" type="button" value="돌아가기" onclick="history.back()"/>
 					</div>
 				</div>
-               <!-- (hidden) ip, 작성자 ID, 작성자 nickname -->
                <input type="hidden" name="member_id" value="${user.member_id}"/>
             </form>
          </div>

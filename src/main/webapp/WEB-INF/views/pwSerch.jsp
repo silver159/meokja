@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -42,10 +41,10 @@ ${mo}
 							<input type="text" placeholder="이름" name="name" class="form-control mb-3"/><br/>
 						</div>
 						<div class="col-lg-6">
-							<input type="text" id="jumin1" maxlength="6" value="950504" placeholder="주민번호 앞자리" class="form-control mb-3"/>
+							<input type="text" id="jumin1" maxlength="6" placeholder="주민번호 앞자리" class="form-control mb-3"/>
 						</div>
 						<div class="col-lg-6">
-							<input type="password" id="jumin2" maxlength="7"  placeholder="뒷자리" value="1057834" class="form-control mb-3"/>
+							<input type="password" id="jumin2" maxlength="7"  placeholder="뒷자리" class="form-control mb-3"/>
 						</div>
 					</div>
 					<div class="d-grid">

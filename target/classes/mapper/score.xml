@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.meokja.dao.ScoreDAO">
-	
+
+<!-- select -->	
 	<!-- 평가 참가자 리스트 -->
 	<select id="scoreList" parameterType="int" resultType="mo">
-	    select j.member_id from tb_party p
-	        join tb_join j
+	    select j.member_id 
+	    	from tb_party p join tb_join j
 	            on p.party_id = j.party_id
 	        where p.party_id = #{party_id} and j.status = '수락'
 	</select>
@@ -44,7 +45,7 @@
 		    WHERE s.member_id = #{member_id}
 	</select>
 	
-	
+<!-- insert -->	
 	<!-- 평가점수 입력 -->
 	<insert id="scoreInsert" parameterType="so">
 		insert into tb_score (score_id, party_id, member_id, score) 

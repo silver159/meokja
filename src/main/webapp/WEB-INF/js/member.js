@@ -30,12 +30,13 @@ function selectEmail() {
 	
 }
 
-//	아이디 유효성 검사 함수    안내 수준
-//	================================================================================
+//	아이디 유효성 검사 함수
 function idCheck() {
 	let member_id = $('#member_id').val().trim();
-	let pattern1 = new RegExp('(?=.*[0-9]+)(?=.*[a-z]+)');	// 숫자와 소문자가 1개이상 들어갔는가?
-	let pattern2 = new RegExp('[^a-z0-9]+');				// 소문자와 숫자만 들어갔는가?
+	// 숫자와 소문자가 1개이상 들어갔는가?
+	let pattern1 = new RegExp('(?=.*[0-9]+)(?=.*[a-z]+)');
+	// 소문자와 숫자만 들어갔는가?
+	let pattern2 = new RegExp('[^a-z0-9]+');				
 	
 	$('#IDCheckOK').val('NO');	
 	if(member_id.length == 0) {
@@ -74,7 +75,7 @@ function idCheck() {
 		type: "post",				// 요청 방식
 		url: "memberServlet",		// 요청할 서블릿
 		data: { 					// 서블릿으로 전송할 데이터
-			"member_id" : member_id				// 변수명: 값
+			"member_id" : member_id	// 변수명: 값
 		},
 		dataType: "text",
 		success: res => {
@@ -99,9 +100,6 @@ function idCheck() {
 	});
     return true;
 }
-
-//	비밀번호 유효성 검사 함수
-//	================================================================================
 
 //	비밀번호 유호성 검사
 function pwdCheck1() {
@@ -155,7 +153,6 @@ function pwdCheck2() {
 }
 
 //	form check 
-//	================================================================================
 function formCheck() {
 
 	let j1 = $('input[name=jumin1]').val().trim();
@@ -298,7 +295,6 @@ function formCheck() {
 	
 }
 
-
 // 다음 주소 API
 function execDaumPostcode() {
     new daum.Postcode({
@@ -348,8 +344,6 @@ function execDaumPostcode() {
     }).open();
 }
 
-
 function loginCheck (){
 	alert('로그인이 필요한 서비스입니다.');
-	
 }

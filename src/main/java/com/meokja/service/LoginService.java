@@ -77,7 +77,7 @@ public class LoginService {
         	idSearchMessage = "alert('일치하는 정보가 없습니다.');\n";
         	idSearchMessage += "location.href='idSerchPage';";
 		} else {
-			idSearchMessage = "alert('" + memberVO.getName() + "님의 아이디는" + member_id + "입니다.');\n";
+			idSearchMessage = "alert('" + memberVO.getName() + "님의 아이디는 " + member_id + "입니다.');\n";
 			idSearchMessage += "location.href='loginPage';";
 		}
         

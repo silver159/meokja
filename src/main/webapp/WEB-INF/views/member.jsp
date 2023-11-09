@@ -39,7 +39,7 @@
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="col-lg-12">
 					<h3 class="mb-4 text-center">회원가입</h3>
-<!-- form 시작 -->
+					<!-- form 시작 -->
 					<form class="bg-grey" method="post" action="member" enctype="multipart/form-data" onsubmit="return formCheck()"
 						style="padding: 10px 150px;">
 						<!-- 프로필 사진 -->
@@ -47,14 +47,14 @@
 							<div class="row mb-3">
 						    	<div class="col-md-2"></div>
 						    		<div class="col-md-8">
-						         		<h5 class="mb-3 text-center">파일 업로드</h5>
+						         		<h5 class="mb-3 text-center">프로필 사진 업로드</h5>
 						         		<input class="form-control" type="file" accept="image/*" name="fileName" onchange="photoView(event)"/>
 						      		</div>
 						      	<div class="col-md-2"></div>
 						   	</div>
-						   	<div class="row mb-3">
-								<div class="col-lg-12">
-									<img id="output" class="img-fluid w-100"/><br/>
+						   	<div class="row mb-3" style="float: none; margin: 5 auto;">
+								<div class="col-lg-4" style="float: none; margin: 0 auto;">
+									<img id="output" class="img-fluid w-100"  src="upload/memberphoto/default.jpg" /><br/>
 								</div>
 						   	</div>
 						</div>
@@ -164,27 +164,16 @@
 <!-- 회원 저장 모달 창 -->
 <div id="messageModal" class="modal fade" role="dialog" aria-hidden="true">
    <div class="vertical-alignment-helper">
-      <div class="modal-dialog vertival-center">
+      <div class="modal-dialog">
          <!-- 모달 창의 종류(색상)를 설정한다. -->
-         <!-- messageCheck라는 id를 추가하고 class를 제거한다. -->
-         <div id="messageCheck" class="modal-content panel-warning">
+         <div id="messageCheck" class="modal-content">
             <!-- 헤더 -->
-            <div class="modal-header panel-heading">
-               <!-- 헤더 오른쪽 상단에 "X" 버튼 표시 -->
-               <button class="close btn btn-lg" type="button" data-dismiss="modal">
-                  <span aria-hidden="true">&times;</span>
-                  <span class="sr-only">Close</span>
-               </button>
-               <!-- messageType이라는 id를 추가한다. -->
-               <h4 id="messageType" class="modal-title">
-                  에러 메시지
-               </h4>
+            <div class="modal-header">
+               <h5 class="modal-title" id="staticBackdropLabel">에러메세지</h5>
             </div>
             <!-- 바디 -->
-            <!-- messageContent이라는 id를 추가한다. -->
             <div id="messageContent" class="modal-boby">
             </div>
-            <!-- 풋터 -->
             <div class="modal-footer">
                <button class="btn btn-primary" type="button" data-dismiss="modal">닫기</button>
             </div>
