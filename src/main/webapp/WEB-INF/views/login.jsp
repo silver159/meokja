@@ -40,41 +40,34 @@
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="col-lg-12">
-					<div class="row mb-3">
-						<div class="col-lg-2"></div>
-						<div class="col-lg-8">
-							<!-- <img id="output" class="img-fluid w-100"/><br/> -->
+					<form class="comment-form mb-3 gray-bg p-5" action="login" method="post" onsubmit="return formCheck()">
+						<h1 class="mb-4" style="vertical-align: middle; text-align: center; font-size: 25px;">로그인</h1>
+						<div class="row">
+							<!-- 로그인 입력 -->
+							<div class="col-lg-12">
+								<input type="text" id="userId" class="form-control mb-3" name="member_id" autocomplete="off" placeholder="아이디"/>
+							</div>
+							<!-- 비밀번호 입력 -->
+							<div class="col-lg-12">
+								<input type="password" class="form-control mb-3" name="pw" autocomplete="off" placeholder="비밀번호"/>
+							</div>
 						</div>
-						<div class="col-lg-2"></div>
-					</div>
-				<form class="comment-form mb-3 gray-bg p-5" action="login" method="post" onsubmit="return formCheck()">
-					<h1 class="mb-4" style="vertical-align: middle; text-align: center; font-size: 25px;">로그인</h1>
-					<div class="row">
-						<!-- 로그인 입력 -->
-						<div class="col-lg-12">
-							<input type="text" id="userId" class="form-control mb-3" name="member_id" autocomplete="off" placeholder="아이디"/>
+						<div>
+							<label for="idSave">아이디 저장 &nbsp;</label>
+							<input id="idSave" type="checkbox" name="idSave"/><br/>
+							<div class="mb-2">
+								<a href="idSerchPage">아이디 찾기</a>&nbsp;&nbsp;
+								<a href="pwSerchPage">비밀번호 찾기</a>
+							</div>
 						</div>
-						<!-- 비밀번호 입력 -->
-						<div class="col-lg-12">
-							<input type="password" class="form-control mb-3" name="pw" autocomplete="off" placeholder="비밀번호"/>
+						<div class="d-grid">
+							<input class="btn btn-primary btn-block mb-3" type="submit" value="로그인" onclick="login()">
+							<input class="btn btn-primary btn-block" type="button" value="회원가입" onclick="location.href='memberPage'">
 						</div>
-					</div>
-					<div>
-						<label for="idSave">아이디 저장 &nbsp;</label>
-						<input id="idSave" type="checkbox" name="idSave"/><br/>
-						<div class="mb-2">
-							<a href="idSerchPage">아이디 찾기</a>&nbsp;&nbsp;
-							<a href="pwSerchPage">비밀번호 찾기</a>
-						</div>
-					</div>
-					<div class="d-grid">
-						<input class="btn btn-primary btn-block mb-3" type="submit" value="로그인" onclick="login()">
-						<input class="btn btn-primary btn-block" type="button" value="회원가입" onclick="location.href='memberPage'">
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 </section>
 

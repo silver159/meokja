@@ -17,7 +17,7 @@
 		<div class="row justify-content-center">
 			<div class="col-lg-6">
 				<div class="copyright text-center ">
-					&copy; copyright all reserved to <a href="https://themefisher.com/">themefisher.com</a>-2019
+					&copy; copyright all reserved to <a href="https://themefisher.com/">themefisher.com</a>
 				</div>
 			</div>
 		</div>

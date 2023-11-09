@@ -35,78 +35,79 @@
 
 <section class="single-block-wrapper section-padding">
 <div class="container">
-<div class="row">
-	<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-		<div class="single-post">
-			<div class="post-header mb-5 text-center">
-				<h2 class="post-title mt-2">
-	               <c:set var="subject" value="${fn:replace(vo.subject, '<', '&lt;')}"/>
-	               <c:set var="subject" value="${fn:replace(subject, '>', '&gt;')}"/>
-					${subject}
-				</h2>
-				<div class="post-featured-image mt-5">
-					<img src="upload/thumbnail/${vo.thumbnail}" class="img-fluid w-100" style="height: 420px;"/>
+	<div class="row">
+		<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+			<div class="single-post">
+				<div class="post-header mb-5 text-center">
+					<h2 class="post-title mt-2">
+		               <c:set var="subject" value="${fn:replace(vo.subject, '<', '&lt;')}"/>
+		               <c:set var="subject" value="${fn:replace(subject, '>', '&gt;')}"/>
+						${subject}
+					</h2>
+					<div class="post-featured-image mt-5">
+						<img src="upload/thumbnail/${vo.thumbnail}" class="img-fluid w-100" style="height: 420px;"/>
+					</div>
 				</div>
-			</div>
-			<div class="post-body">
-	            <div class="container bg-grey comment-form">
-					<div class="row">
-		               	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		                   	<div class="col-lg-12">
-		                       	<div class="row">
-		                          	<!-- 장소 -->
-		                          	<div class="col-lg-12">
-			                           	<h5 class="m-3 text-center">장소</h5>
-			                           	<div class="text-center m-3">${vo.map}</div>
-			                           	<input id="keyword" value="${vo.map}" hidden="hidden">
-										<div class="map_wrap mb-3">
-											<div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-											<div id="menu_wrap" class="bg_white" hidden="hidden">
-												<div class="option">
-													<div></div>
+				<div class="post-body">
+		            <div class="container bg-grey comment-form">
+						<div class="row">
+			               	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			                   	<div class="col-lg-12">
+			                       	<div class="row">
+			                          	<!-- 장소 -->
+			                          	<div class="col-lg-12">
+				                           	<h5 class="m-3 text-center">장소</h5>
+				                           	<div class="text-center m-3">${vo.map}</div>
+				                           	<input id="keyword" value="${vo.map}" hidden="hidden">
+											<div class="map_wrap mb-3">
+												<div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+												<div id="menu_wrap" class="bg_white" hidden="hidden">
+													<div class="option">
+														<div></div>
+													</div>
+													<hr>
+													<h3></h3>
+													<ul id="placesList"></ul>
+													<div id="pagination"></div>
 												</div>
-												<hr>
-												<h3></h3>
-												<ul id="placesList"></ul>
-												<div id="pagination"></div>
 											</div>
+			                          	</div>
+			                          	<!-- 음식카테고리 -->
+			                          	<div class="col-lg-4 col-md-6">
+			                           	<h5 class="mb-3 text-center">음식 카테고리</h5>
+			                           		<div class="text-center mb-3">${vo.food_category}</div>
+			                          	</div>
+			                          	<!-- 모임 시간 -->
+			                          	<div class="col-lg-4 col-md-6">
+			                           		<h5 class="mb-3 text-center">식사 시간</h5>
+			                           		<div class="text-center mb-5">
+			                           			<fmt:formatDate value="${vo.mealed_at}" pattern="MM월 dd일 HH:mm"/>
+			                           		</div>
+			                          	</div>
+			                          	<!-- 인원 -->
+			                          	<div class="col-lg-4 col-md-6">
+			                           	<h5 class="mb-3 text-center">인원 제한</h5>
+			                           		<div class="text-center mb-3">${vo.limitNum}명</div>
+			                          	</div>
+			                          	<!-- 글 내용 -->
+			                          	<div class="col-lg-12">
+			                             	<c:set var="contents" value="${fn:replace(vo.contents, '<', '&lt;')}"/>
+			                             	<c:set var="contents" value="${fn:replace(contents, '>', '&gt;')}"/>
+			                             	<c:set var="contents" value="${fn:replace(contents, '<br/>', enter)}"/>
+			                             	<textarea class="form-control mb-3" name="contents" rows="15" cols="30" style="resize: none;" readonly="readonly">${contents}</textarea>
+			                          	</div>
+									</div>
+		                       		<div class="row">
+			                       		<div class="col-lg-12 text-center" style="margin-bottom: 15px;">
+			                       		<form action="partyDelete" method="post">
+			                       			<input type="hidden" name="currentPage" value="${currentPage}">
+			                       			<input type="hidden" name="party_id" value="${vo.party_id}">
+											<div class="btn-group">
+												<input class="btn btn-primary" type="submit" value="삭제하기"/>
+				                               	<input class="btn btn-primary" type="button" value="돌아가기" onclick="history.back()"/>
+											</div>
+			                       		</form>
 										</div>
-		                          	</div>
-		                          	<!-- 음식카테고리 -->
-		                          	<div class="col-lg-4 col-md-6">
-		                           	<h5 class="mb-3 text-center">음식 카테고리</h5>
-		                           		<div class="text-center mb-3">${vo.food_category}</div>
-		                          	</div>
-		                          	<!-- 모임 시간 -->
-		                          	<div class="col-lg-4 col-md-6">
-		                           		<h5 class="mb-3 text-center">식사 시간</h5>
-		                           		<div class="text-center mb-5">
-		                           			<fmt:formatDate value="${vo.mealed_at}" pattern="MM월 dd일 HH:mm"/>
-		                           		</div>
-		                          	</div>
-		                          	<!-- 인원 -->
-		                          	<div class="col-lg-4 col-md-6">
-		                           	<h5 class="mb-3 text-center">인원 제한</h5>
-		                           		<div class="text-center mb-3">${vo.limitNum}명</div>
-		                          	</div>
-		                          	<!-- 글 내용 -->
-		                          	<div class="col-lg-12">
-		                             	<c:set var="contents" value="${fn:replace(vo.contents, '<', '&lt;')}"/>
-		                             	<c:set var="contents" value="${fn:replace(contents, '>', '&gt;')}"/>
-		                             	<c:set var="contents" value="${fn:replace(contents, '<br/>', enter)}"/>
-		                             	<textarea class="form-control mb-3" name="contents" rows="15" cols="30" style="resize: none;" readonly="readonly">${contents}</textarea>
-		                          	</div>
-								</div>
-	                       		<div class="row">
-		                       		<div class="col-lg-12 text-center" style="margin-bottom: 15px;">
-		                       		<form action="partyDelete" method="post">
-		                       			<input type="hidden" name="currentPage" value="${currentPage}">
-		                       			<input type="hidden" name="party_id" value="${vo.party_id}">
-										<div class="btn-group">
-											<input class="btn btn-primary" type="submit" value="삭제하기"/>
-			                               	<input class="btn btn-primary" type="button" value="돌아가기" onclick="history.back()"/>
-										</div>
-		                       		</form>
 									</div>
 								</div>
 							</div>
@@ -115,30 +116,26 @@
 				</div>
 			</div>
 		</div>
-	</div>
-   
-	<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-		<div class="sidebar sidebar-right">
-			<div class="sidebar-wrap mt-5 mt-lg-0">
-				<div class="sidebar-widget about mb-5 text-center p-3">
-					<div class="about-author">
-						<img src="upload/memberphoto/${master.photo}" alt="" class="img-fluid">
+	   
+		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+			<div class="sidebar sidebar-right">
+				<div class="sidebar-wrap mt-5 mt-lg-0">
+					<div class="sidebar-widget about mb-5 text-center p-3">
+						<div class="about-author">
+							<img src="upload/memberphoto/${master.photo}" alt="" class="img-fluid">
+						</div>
+						<h4 class="mb-0 mt-4">모임장</h4>
+						<p>${master.nickname}</p>
 					</div>
-					<h4 class="mb-0 mt-4">모임장</h4>
-					<p>${master.nickname}</p>
 				</div>
 			</div>
 		</div>
 	</div>
-
-</div>
 </div>
 </section>
 	
 	<!-- footer -->
 	<jsp:include page="common/footer.jsp" ></jsp:include>
-	
-
 
 <script type="text/javascript">
 	$(() => {

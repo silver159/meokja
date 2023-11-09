@@ -61,7 +61,6 @@
 					<div><a href="memberPage"style=" width: 100px;"><i>회원가입</i></a></div>
 				</div>
 			</c:if>
-			<!-- 로그인 로그아웃 끝 -->				
 			</div>
 		</div>
 	</nav>

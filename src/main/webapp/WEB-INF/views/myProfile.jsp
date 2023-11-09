@@ -54,14 +54,6 @@
 						      		</div>
 						      	<div class="col-md-2"></div>
 						   	</div>
-<%-- 						   	<div class="row mb-3">
-								<div class="col-lg-12">
-									<img id="output" class="img-fluid w-100" src="upload/memberphoto/${user.photo}" style="width: 350px; height: 350px;"/>
-								</div>
-								<div class="col-lg-12 text-center mt-5">
-									<input class="btn btn-success" type="button" value="사진 초기화" onclick="defaultImg()"/>
-								</div>
-						   	</div> --%>
 						   	<div class="row" style="float: none; margin: 5 auto;">
 						   		<div class="col-lg-4" style="float: none; margin: 0 auto;">
 									<img id="output" class="img-fluid w-100 mb-2" src="upload/memberphoto/${user.photo}" style="height: 150px;"/>
@@ -178,8 +170,6 @@
 		</div>
 	</div>
 </section>
-
-
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <!-- footer -->

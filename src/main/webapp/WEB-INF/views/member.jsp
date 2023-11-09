@@ -154,7 +154,6 @@
 							<input type="hidden" name="age"/>
 						</div>
 					</form>
-<!-- form 끝 -->
 				</div>
 			</div>
 		</div>
